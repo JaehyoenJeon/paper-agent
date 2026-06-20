@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>논문 Research Agent — 반도체·재료공학</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap');
+:root{--bg:#0f1117;--bg2:#161b27;--bg3:#1e2538;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);--text:#e8eaf0;--muted:#7b83a0;--dim:rgba(232,234,240,0.55);--accent:#4f8ef7;--accent2:#7c5ef7;--teal:#2dd4bf;--amber:#fbbf24;--red:#f87171;--green:#4ade80;--coral:#fb923c;--r:10px;--rl:16px;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;line-height:1.6;min-height:100vh}
+.topbar{border-bottom:0.5px solid var(--border);padding:13px 24px;display:flex;align-items:center;gap:10px;position:sticky;top:0;background:rgba(15,17,23,0.95);backdrop-filter:blur(14px);z-index:100}
+.logo{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.logo-text{font-weight:600;font-size:15px}
+.logo-sub{font-size:12px;color:var(--muted)}
+.free-badge{margin-left:auto;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(74,222,128,.1);color:var(--green);border:0.5px solid rgba(74,222,128,.28)}
+.main{max-width:900px;margin:0 auto;padding:1.75rem 1.5rem 5rem}
+.tab-row{display:flex;gap:4px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);padding:4px;margin-bottom:1.75rem}
+.tab{flex:1;padding:8px 4px;text-align:center;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border-radius:7px;transition:all .15s;white-space:nowrap}
+.tab.on{background:var(--bg3);color:var(--text)}
+.panel{display:none}.panel.on{display:block}
+.lbl{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px}
+input[type=text],select{width:100%;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--r);color:var(--text);font-family:inherit;font-size:13px;padding:0 12px;height:38px;outline:none;transition:border-color .15s}
+input[type=text]:focus,select:focus{border-color:var(--accent)}
+select option{background:var(--bg2)}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.row{display:flex;gap:8px;margin-bottom:13px;align-items:flex-start;flex-wrap:wrap}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:13px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:13px}
+.field{margin-bottom:13px}
+.btn{height:38px;padding:0 18px;border-radius:var(--r);border:0.5px solid var(--border2);background:var(--bg2);color:var(--text);font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;transition:all .15s;display:inline-flex;align-items:center;gap:6px;text-decoration:none}
+.btn:hover{background:var(--bg3)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn-primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn-primary:hover{background:#3a7de0}
+.btn-claude{background:rgba(124,94,247,.15);border-color:rgba(124,94,247,.35);color:#a78bfa}
+.btn-claude:hover{background:rgba(124,94,247,.25)}
+.btn-sm{height:30px;padding:0 12px;font-size:12px}
+.chip-row{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:13px}
+.chip{font-size:12px;padding:4px 11px;border-radius:20px;border:0.5px solid var(--border2);background:var(--bg2);color:var(--muted);cursor:pointer;transition:all .15s;user-select:none}
+.chip.on{background:rgba(79,142,247,.14);border-color:rgba(79,142,247,.5);color:var(--accent)}
+.chip:hover:not(.on){color:var(--text)}
+.card{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:1.1rem 1.2rem;margin-bottom:9px;transition:border-color .15s}
+.card:hover{border-color:var(--border2)}
+.card-hot{border-left:2px solid var(--red)}
+.ptitle{font-size:14px;font-weight:500;color:var(--text);line-height:1.45;margin-bottom:4px}
+.pmeta{font-size:12px;color:var(--muted);margin-bottom:7px}
+.pabs{font-size:12px;color:var(--dim);line-height:1.65;margin-bottom:6px}
+.pfoot{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:6px}
+.badge{font-size:11px;padding:3px 7px;border-radius:5px;font-weight:500}
+.b-blue{background:rgba(79,142,247,.14);color:#7bb3f9}
+.b-teal{background:rgba(45,212,191,.11);color:#2dd4bf}
+.b-amber{background:rgba(251,191,36,.11);color:#fbbf24}
+.b-red{background:rgba(248,113,113,.11);color:#f87171}
+.b-purple{background:rgba(124,94,247,.14);color:#a78bfa}
+.b-green{background:rgba(74,222,128,.11);color:#4ade80}
+.b-coral{background:rgba(251,146,60,.11);color:#fb923c}
+.alink{font-size:12px;color:var(--accent);background:none;border:none;cursor:pointer;margin-left:auto;padding:0;text-decoration:none}
+.alink:hover{text-decoration:underline}
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:1.2rem}
+.stat{background:var(--bg3);border-radius:var(--r);padding:11px;text-align:center}
+.stat-n{font-size:20px;font-weight:600;color:var(--text);font-family:'JetBrains Mono',monospace}
+.stat-l{font-size:11px;color:var(--muted);margin-top:2px}
+.empty{text-align:center;padding:3rem 1rem;color:var(--muted);font-size:14px}
+.dots{display:inline-flex;gap:4px}
+.dots span{width:5px;height:5px;border-radius:50%;background:var(--accent);animation:bop 1.2s infinite}
+.dots span:nth-child(2){animation-delay:.2s}.dots span:nth-child(3){animation-delay:.4s}
+@keyframes bop{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-5px)}}
+.range-row{display:flex;align-items:center;gap:10px;margin-bottom:13px}
+.range-val{font-size:13px;font-weight:500;font-family:'JetBrains Mono',monospace;color:var(--text);min-width:36px}
+.tag-wrap{display:flex;flex-wrap:wrap;gap:5px;border:0.5px solid var(--border2);border-radius:var(--r);padding:6px 8px;background:var(--bg2);min-height:38px;align-items:center}
+.tag-item{background:rgba(79,142,247,.14);color:var(--accent);font-size:12px;padding:2px 8px;border-radius:4px;display:flex;align-items:center;gap:4px}
+.tag-item button{background:none;border:none;cursor:pointer;color:var(--accent);font-size:13px;padding:0;line-height:1;opacity:.7}
+.tag-item button:hover{opacity:1}
+.tag-wrap input{border:none;outline:none;font-size:13px;background:transparent;color:var(--text);min-width:80px;flex:1;height:24px;padding:0}
+.info-box{background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--r);padding:.9rem 1.1rem;margin-bottom:1.2rem;font-size:13px;color:var(--dim);line-height:1.65}
+.info-box strong{color:var(--text);font-weight:500}
+.claude-box{background:rgba(124,94,247,.07);border:0.5px solid rgba(124,94,247,.22);border-radius:var(--rl);padding:1.1rem 1.2rem;margin-bottom:1.3rem}
+.claude-box-head{font-size:12px;font-weight:600;color:#a78bfa;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+.section-head{font-size:13px;font-weight:500;color:var(--text);margin-bottom:1rem;display:flex;align-items:center;gap:8px}
+.count-pill{font-size:11px;padding:2px 8px;border-radius:20px;background:var(--bg3);color:var(--muted)}
+@media(max-width:640px){.g2,.g3{grid-template-columns:1fr}.stat-row{grid-template-columns:repeat(2,1fr)}.tab{font-size:11px;padding:7px 2px}.topbar{padding:11px 14px}.main{padding:1.2rem 1rem 4rem}.logo-sub{display:none}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="logo">&#x26db;</div>
+  <span class="logo-text">논문 Research Agent</span>
+  <span class="logo-sub">· 반도체 · 재료공학</span>
+  <span class="free-badge">완전 무료</span>
+</div>
+<div class="main">
+  <div class="tab-row">
+    <div class="tab on" onclick="switchTab('weekly',this)">&#x1F4C5; Weekly Digest</div>
+    <div class="tab" onclick="switchTab('search',this)">&#x1F50D; 주제 검색</div>
+    <div class="tab" onclick="switchTab('watch',this)">&#x1F441; 분야 모니터</div>
+    <div class="tab" onclick="switchTab('hot',this)">&#x1F525; 혁신 논문</div>
+  </div>
+
+  <!-- WEEKLY -->
+  <div id="panel-weekly" class="panel on">
+    <div class="info-box"><strong>Weekly Digest</strong> — 저널 + 주제 키워드로 최신 논문을 수집합니다. 각 논문 아래 <strong>이 논문 요약하기</strong> 버튼으로 Claude에서 무료 요약을 받을 수 있습니다.</div>
+    <div class="lbl">저널 선택</div>
+    <div class="chip-row" id="j-chips">
+      <span class="chip on" data-j="Nature Electronics">Nature Electronics</span>
+      <span class="chip on" data-j="ACS Nano">ACS Nano</span>
+      <span class="chip on" data-j="Advanced Materials">Advanced Materials</span>
+      <span class="chip" data-j="Nano Letters">Nano Letters</span>
+      <span class="chip" data-j="Nature Materials">Nature Materials</span>
+      <span class="chip" data-j="Nature Nanotechnology">Nature Nanotechnology</span>
+      <span class="chip" data-j="Science">Science</span>
+      <span class="chip" data-j="Physical Review Letters">Physical Review Letters</span>
+      <span class="chip" data-j="IEEE Transactions on Electron Devices">IEEE Trans. Electron Devices</span>
+      <span class="chip" data-j="IEEE Electron Device Letters">IEEE Electron Device Lett.</span>
+      <span class="chip" data-j="Journal of Applied Physics">J. Applied Physics</span>
+      <span class="chip" data-j="Applied Physics Letters">Applied Physics Letters</span>
+      <span class="chip" data-j="Thin Solid Films">Thin Solid Films</span>
+      <span class="chip" data-j="npj Computational Materials">npj Comp. Materials</span>
+      <span class="chip" data-j="Materials Today">Materials Today</span>
+      <span class="chip" data-j="Small">Small</span>
+      <span class="chip" data-j="Advanced Functional Materials">Adv. Functional Materials</span>
+      <span class="chip" data-j="Semiconductor Science and Technology">Semicond. Sci. Tech.</span>
+      <span class="chip" data-j="Microelectronic Engineering">Microelectronic Engineering</span>
+      <span class="chip" data-j="Journal of Vacuum Science Technology">J. Vacuum Sci. Tech.</span>
+      <span class="chip" data-j="ECS Journal of Solid State Science">ECS Solid State</span>
+    </div>
+    <div class="lbl">주제 키워드 필터 <span style="font-size:11px;color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0">(선택 없으면 전체 표시)</span></div>
+    <div class="tag-wrap" id="w-kw-wrap">
+      <input type="text" id="w-kw-input" placeholder="키워드 입력 후 Enter (예: FinFET, ALD, GaN...)" onkeydown="addWKw(event)">
+    </div>
+    <div style="font-size:11px;color:var(--muted);margin-top:4px;margin-bottom:8px">Enter로 추가 · x로 삭제</div>
+    <div class="chip-row" style="margin-bottom:13px">
+      <span class="chip" onclick="addWKwD('FinFET')">FinFET</span>
+      <span class="chip" onclick="addWKwD('GAA nanosheet transistor')">GAA</span>
+      <span class="chip" onclick="addWKwD('GaN HEMT')">GaN HEMT</span>
+      <span class="chip" onclick="addWKwD('SiC power device')">SiC</span>
+      <span class="chip" onclick="addWKwD('EUV lithography')">EUV</span>
+      <span class="chip" onclick="addWKwD('ALD atomic layer deposition')">ALD</span>
+      <span class="chip" onclick="addWKwD('CVD thin film growth')">CVD</span>
+      <span class="chip" onclick="addWKwD('high-k gate dielectric')">High-k</span>
+      <span class="chip" onclick="addWKwD('DRAM memory scaling')">DRAM</span>
+      <span class="chip" onclick="addWKwD('NAND flash memory')">NAND Flash</span>
+      <span class="chip" onclick="addWKwD('2D materials MoS2 graphene')">2D Materials</span>
+      <span class="chip" onclick="addWKwD('perovskite solar cell')">Perovskite</span>
+      <span class="chip" onclick="addWKwD('memristor neuromorphic')">Memristor</span>
+      <span class="chip" onclick="addWKwD('plasma etching RIE')">Plasma Etch</span>
+      <span class="chip" onclick="addWKwD('metal interconnect copper')">Interconnect</span>
+      <span class="chip" onclick="addWKwD('interface trap MOS oxide')">Interface Trap</span>
+    </div>
+    <div class="g3">
+      <div><div class="lbl">기간</div>
+        <select id="w-period"><option value="30">최근 1개월</option><option value="365">최근 1년</option><option value="1095">최근 3년</option><option value="3650">최근 10년</option></select>
+      </div>
+      <div><div class="lbl">저널당 논문 수</div>
+        <select id="w-max"><option value="5">5편</option><option value="10">10편</option><option value="20">20편</option></select>
+      </div>
+      <div><div class="lbl">논문별 요약 버튼</div>
+        <select id="w-sum"><option value="yes">표시 (추천)</option><option value="no">숨기기</option></select>
+      </div>
+    </div>
+    <button class="btn btn-primary" id="w-btn" onclick="runWeekly()">&#x25B6; Digest 생성</button>
+    <div id="res-weekly" style="margin-top:1.4rem"><div class="empty">저널과 주제를 선택하고 Digest를 생성해주세요</div></div>
+  </div>
+
+  <!-- SEARCH -->
+  <div id="panel-search" class="panel">
+    <div class="field">
+      <div class="lbl">검색어</div>
+      <div class="row">
+        <input type="text" id="s-query" placeholder="예: FinFET gate leakage, GaN HEMT breakdown, EUV patterning resist..." style="flex:1">
+        <button class="btn btn-primary" id="s-btn" onclick="runSearch()">검색</button>
+      </div>
+    </div>
+    <div class="g3">
+      <div><div class="lbl">기간</div>
+        <select id="s-year"><option value="">전체 기간</option><option value="2025">2025</option><option value="2024">2024</option><option value="2023">2023</option><option value="2022">2022</option><option value="2021">2021</option><option value="2020">2020</option></select>
+      </div>
+      <div><div class="lbl">정렬</div>
+        <select id="s-sort"><option value="relevance">관련도순</option><option value="citationCount">인용수순</option><option value="year">최신순</option></select>
+      </div>
+      <div><div class="lbl">결과 수</div>
+        <select id="s-limit"><option value="10">10편</option><option value="20">20편</option><option value="30">30편</option></select>
+      </div>
+    </div>
+    <div class="lbl">최소 인용수</div>
+    <div class="range-row">
+      <input type="range" id="s-cite" min="0" max="500" step="10" value="0" oninput="document.getElementById('s-cite-v').textContent=this.value">
+      <span class="range-val" id="s-cite-v">0</span>
+      <span style="font-size:12px;color:var(--muted)">회 이상</span>
+    </div>
+    <div class="lbl">저널 한정 <span style="font-size:11px;color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0">(선택 없으면 전체)</span></div>
+    <div class="chip-row" id="s-j-chips">
+      <span class="chip" data-j2="Nature Electronics">Nature Electronics</span>
+      <span class="chip" data-j2="ACS Nano">ACS Nano</span>
+      <span class="chip" data-j2="Advanced Materials">Advanced Materials</span>
+      <span class="chip" data-j2="Nano Letters">Nano Letters</span>
+      <span class="chip" data-j2="IEEE Transactions on Electron Devices">IEEE TED</span>
+      <span class="chip" data-j2="Applied Physics Letters">APL</span>
+      <span class="chip" data-j2="Journal of Applied Physics">J. Appl. Phys.</span>
+      <span class="chip" data-j2="Thin Solid Films">Thin Solid Films</span>
+      <span class="chip" data-j2="Small">Small</span>
+    </div>
+    <div class="lbl">필터</div>
+    <div class="chip-row" style="margin-bottom:1.4rem">
+      <span class="chip" id="opt-oa" onclick="this.classList.toggle('on')">Open Access만</span>
+      <span class="chip on" id="opt-arxiv" onclick="this.classList.toggle('on')">arXiv 포함</span>
+    </div>
+    <div class="lbl">빠른 검색</div>
+    <div class="chip-row" style="margin-bottom:1.4rem">
+      <span class="chip" onclick="qs('gate-all-around nanosheet transistor fabrication')">GAA Nanosheet</span>
+      <span class="chip" onclick="qs('EUV extreme ultraviolet lithography patterning')">EUV Lithography</span>
+      <span class="chip" onclick="qs('GaN HEMT power device breakdown voltage')">GaN HEMT</span>
+      <span class="chip" onclick="qs('high-k dielectric interface trap MOSFET')">High-k Dielectric</span>
+      <span class="chip" onclick="qs('atomic layer deposition ALD semiconductor')">ALD</span>
+      <span class="chip" onclick="qs('2D materials MoS2 transistor')">2D Materials</span>
+      <span class="chip" onclick="qs('neuromorphic memristor synaptic device')">Memristor</span>
+      <span class="chip" onclick="qs('perovskite solar cell efficiency stability')">Perovskite</span>
+      <span class="chip" onclick="qs('SiC MOSFET power switching')">SiC MOSFET</span>
+      <span class="chip" onclick="qs('DRAM capacitor scaling dielectric')">DRAM</span>
+      <span class="chip" onclick="qs('FinFET short channel effect leakage')">FinFET SCE</span>
+      <span class="chip" onclick="qs('CVD chemical vapor deposition thin film')">CVD</span>
+      <span class="chip" onclick="qs('metal oxide semiconductor interface')">MOS Interface</span>
+      <span class="chip" onclick="qs('quantum dot photoluminescence nanocrystal')">Quantum Dot</span>
+      <span class="chip" onclick="qs('spin transfer torque MRAM magnetic')">STT-MRAM</span>
+      <span class="chip" onclick="qs('plasma etching RIE semiconductor process')">Plasma Etching</span>
+    </div>
+    <div id="res-search"><div class="empty">키워드를 입력하고 검색해주세요</div></div>
+  </div>
+
+  <!-- WATCH -->
+  <div id="panel-watch" class="panel">
+    <div class="info-box"><strong>분야 모니터</strong> — 저널과 무관하게 관심 키워드로 전체 논문 DB를 모니터링합니다.</div>
+    <div class="lbl">관심 키워드</div>
+    <div class="tag-wrap" id="kw-wrap">
+      <div class="tag-item" data-kw="semiconductor device fabrication">semiconductor fabrication <button onclick="this.parentElement.remove()">x</button></div>
+      <div class="tag-item" data-kw="device physics carrier transport">device physics <button onclick="this.parentElement.remove()">x</button></div>
+      <div class="tag-item" data-kw="thin film deposition">thin film deposition <button onclick="this.parentElement.remove()">x</button></div>
+      <input type="text" id="kw-input" placeholder="키워드 입력 후 Enter" onkeydown="addTag(event)">
+    </div>
+    <div style="font-size:11px;color:var(--muted);margin-top:4px;margin-bottom:10px">Enter로 추가 · x로 삭제</div>
+    <div class="lbl">추천 키워드</div>
+    <div class="chip-row" style="margin-bottom:1.2rem">
+      <span class="chip" onclick="addKw('FinFET gate length scaling')">FinFET scaling</span>
+      <span class="chip" onclick="addKw('gate-all-around GAA transistor')">GAA transistor</span>
+      <span class="chip" onclick="addKw('EUV lithography patterning')">EUV lithography</span>
+      <span class="chip" onclick="addKw('GaN HEMT power amplifier')">GaN HEMT</span>
+      <span class="chip" onclick="addKw('SiC MOSFET power device')">SiC MOSFET</span>
+      <span class="chip" onclick="addKw('ALD atomic layer deposition')">ALD</span>
+      <span class="chip" onclick="addKw('CVD epitaxy thin film growth')">CVD / Epitaxy</span>
+      <span class="chip" onclick="addKw('high-k gate dielectric oxide')">High-k gate</span>
+      <span class="chip" onclick="addKw('interface trap density MOS')">Interface trap</span>
+      <span class="chip" onclick="addKw('DRAM capacitor dielectric scaling')">DRAM capacitor</span>
+      <span class="chip" onclick="addKw('NAND flash memory cell')">NAND Flash</span>
+      <span class="chip" onclick="addKw('spin transfer torque MRAM')">STT-MRAM</span>
+      <span class="chip" onclick="addKw('2D materials MoS2 graphene hBN')">2D materials</span>
+      <span class="chip" onclick="addKw('perovskite solar cell efficiency')">Perovskite solar</span>
+      <span class="chip" onclick="addKw('memristor resistive switching')">Memristor</span>
+      <span class="chip" onclick="addKw('quantum dot nanocrystal')">Quantum dot</span>
+      <span class="chip" onclick="addKw('plasma etching RIE semiconductor')">Plasma etching</span>
+      <span class="chip" onclick="addKw('ion implantation dopant activation')">Ion implantation</span>
+      <span class="chip" onclick="addKw('metal interconnect electromigration')">Interconnect</span>
+      <span class="chip" onclick="addKw('CMP chemical mechanical planarization')">CMP</span>
+      <span class="chip" onclick="addKw('contact resistance silicide')">Contact resistance</span>
+      <span class="chip" onclick="addKw('threshold voltage Vth transistor')">Vth control</span>
+    </div>
+    <div class="g3">
+      <div><div class="lbl">기간</div>
+        <select id="wd-days"><option value="30">최근 1개월</option><option value="365">최근 1년</option><option value="1095">최근 3년</option><option value="3650">최근 10년</option></select>
+      </div>
+      <div><div class="lbl">키워드당 결과</div>
+        <select id="wd-lim"><option value="5">5편</option><option value="10">10편</option><option value="20">20편</option></select>
+      </div>
+      <div><div class="lbl">정렬</div>
+        <select id="wd-sort"><option value="year">최신순</option><option value="citationCount">인용수순</option><option value="relevance">관련도순</option></select>
+      </div>
+    </div>
+    <button class="btn btn-primary" id="wd-btn" onclick="runWatch()">&#x25B6; 모니터 실행</button>
+    <div id="res-watch" style="margin-top:1.4rem"><div class="empty">키워드를 설정하고 실행해주세요</div></div>
+  </div>
+
+  <!-- HOT -->
+  <div id="panel-hot" class="panel">
+    <div class="info-box"><strong>혁신 논문 감지</strong> — 선택 분야에서 주목받는 논문을 수집합니다. Claude로 혁신성을 무료 분석할 수 있어요.</div>
+    <div class="lbl">분야 선택</div>
+    <div class="chip-row" id="hot-chips">
+      <span class="chip on" data-hf="semiconductor CMOS fabrication process integration">CMOS Fabrication</span>
+      <span class="chip on" data-hf="transistor MOSFET device physics carrier transport">Device Physics</span>
+      <span class="chip" data-hf="FinFET gate-all-around nanosheet transistor scaling">FinFET / GAA</span>
+      <span class="chip" data-hf="EUV extreme ultraviolet lithography patterning">EUV Lithography</span>
+      <span class="chip" data-hf="atomic layer deposition ALD thin film CVD">ALD / CVD</span>
+      <span class="chip" data-hf="GaN gallium nitride HEMT power device">GaN Power</span>
+      <span class="chip" data-hf="SiC silicon carbide power MOSFET">SiC Power</span>
+      <span class="chip" data-hf="DRAM capacitor memory scaling dielectric">DRAM</span>
+      <span class="chip" data-hf="NAND flash memory 3D V-NAND">NAND Flash</span>
+      <span class="chip" data-hf="STT MRAM magnetic memory spintronic">STT-MRAM</span>
+      <span class="chip" data-hf="2D materials MoS2 graphene TMD electronics">2D Materials</span>
+      <span class="chip" data-hf="perovskite solar cell photovoltaic efficiency">Perovskite Solar</span>
+      <span class="chip" data-hf="memristor resistive switching neuromorphic computing">Memristor / Neuro</span>
+      <span class="chip" data-hf="quantum computing qubit semiconductor">Quantum Computing</span>
+      <span class="chip" data-hf="high-k gate dielectric oxide interface trap">High-k Dielectric</span>
+      <span class="chip" data-hf="plasma etching dry etch semiconductor RIE">Plasma Etching</span>
+      <span class="chip" data-hf="metal interconnect copper low-k dielectric">Interconnect</span>
+      <span class="chip" data-hf="organic semiconductor thin film transistor OLED">Organic Semi.</span>
+      <span class="chip" data-hf="contact resistance ohmic silicide semiconductor">Contact / Silicide</span>
+      <span class="chip" data-hf="ion implantation dopant activation anneal">Ion Implantation</span>
+    </div>
+    <div class="g3">
+      <div><div class="lbl">기간</div>
+        <select id="hot-period"><option value="30">최근 1개월</option><option value="365">최근 1년</option><option value="1095">최근 3년</option><option value="3650">최근 10년</option></select>
+      </div>
+      <div><div class="lbl">후보 논문 수</div>
+        <select id="hot-pool"><option value="10">10편</option><option value="20">20편</option><option value="30">30편</option></select>
+      </div>
+      <div><div class="lbl">정렬 기준</div>
+        <select id="hot-sort"><option value="citationCount">인용수순</option><option value="year">최신순</option></select>
+      </div>
+    </div>
+    <button class="btn btn-primary" id="hot-btn" onclick="runHot()">&#x1F525; 혁신 논문 탐지</button>
+    <div id="res-hot" style="margin-top:1.4rem"><div class="empty">분야를 선택하고 탐지를 실행해주세요</div></div>
+  </div>
+</div>
+
+<script>
+function switchTab(id,el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  el.classList.add('on');document.getElementById('panel-'+id).classList.add('on');
+}
+document.querySelectorAll('#j-chips .chip').forEach(c=>c.onclick=()=>c.classList.toggle('on'));
+document.querySelectorAll('#s-j-chips .chip').forEach(c=>c.onclick=()=>c.classList.toggle('on'));
+document.querySelectorAll('#hot-chips .chip').forEach(c=>c.onclick=()=>c.classList.toggle('on'));
+
+function mkTag(kw,wrapId,inpId){
+  const wrap=document.getElementById(wrapId),inp=document.getElementById(inpId);
+  if([...wrap.querySelectorAll('.tag-item')].some(t=>t.dataset.kw===kw))return;
+  const t=document.createElement('div');t.className='tag-item';t.dataset.kw=kw;
+  t.innerHTML=kw+' <button onclick="this.parentElement.remove()">x</button>';
+  wrap.insertBefore(t,inp);
+}
+function addTag(e){if(e.key!=='Enter')return;const v=e.target.value.trim();if(!v)return;mkTag(v,'kw-wrap','kw-input');e.target.value='';}
+function addKw(kw){mkTag(kw,'kw-wrap','kw-input');}
+function addWKw(e){if(e.key!=='Enter')return;const v=e.target.value.trim();if(!v)return;mkTag(v,'w-kw-wrap','w-kw-input');e.target.value='';}
+function addWKwD(kw){mkTag(kw,'w-kw-wrap','w-kw-input');}
+
+async function apiSS(query,opts){
+  opts=opts||{};
+  const p=new URLSearchParams({query,limit:String(opts.limit||10),fields:'title,authors,year,abstract,venue,citationCount,externalIds,openAccessPdf'});
+  if(opts.sort&&opts.sort!=='relevance')p.set('sort',opts.sort);
+  const r=await fetch('https://api.semanticscholar.org/graph/v1/paper/search?'+p,{headers:{Accept:'application/json'}});
+  if(!r.ok){const t=await r.text();throw new Error('API '+r.status+': '+t.slice(0,100));}
+  const d=await r.json();
+  return(d.data||[]).map(function(p){return{
+    title:p.title||'',
+    authors:(p.authors||[]).slice(0,4).map(function(a){return a.name;}).join(', '),
+    year:p.year||0,abstract:p.abstract||'',venue:p.venue||'',
+    citations:p.citationCount!=null?p.citationCount:null,
+    url:p.externalIds&&p.externalIds.DOI?'https://doi.org/'+p.externalIds.DOI:p.externalIds&&p.externalIds.ArXiv?'https://arxiv.org/abs/'+p.externalIds.ArXiv:null,
+    oa:!!(p.openAccessPdf),arxiv:!!(p.externalIds&&p.externalIds.ArXiv)
+  };});
+}
+
+function getBadge(p){
+  var t=(p.title+' '+p.abstract).toLowerCase();
+  if(t.includes('euv')||t.includes('extreme ultraviolet')||t.includes('lithograph'))return{l:'Lithography',c:'b-amber'};
+  if(t.includes('gan')||t.includes('gallium nitride')||t.includes('hemt'))return{l:'GaN/HEMT',c:'b-teal'};
+  if(t.includes('sic')||t.includes('silicon carbide'))return{l:'SiC',c:'b-teal'};
+  if(t.includes('finfet')||t.includes('gaa')||t.includes('nanosheet')||t.includes('nanowire'))return{l:'Transistor',c:'b-blue'};
+  if(t.includes('ald')||t.includes('atomic layer'))return{l:'ALD',c:'b-purple'};
+  if(t.includes('cvd')||t.includes('epitax'))return{l:'CVD/Epi',c:'b-purple'};
+  if(t.includes('dram')||t.includes('flash')||t.includes('nand')||t.includes('memory'))return{l:'Memory',c:'b-amber'};
+  if(t.includes('2d material')||t.includes('mos2')||t.includes('graphene')||t.includes('tmd'))return{l:'2D Mat.',c:'b-teal'};
+  if(t.includes('high-k')||t.includes('dielectric')||t.includes('gate oxide'))return{l:'Dielectric',c:'b-blue'};
+  if(t.includes('perovskite')||t.includes('solar'))return{l:'Photovoltaic',c:'b-green'};
+  if(t.includes('memristor')||t.includes('resistive')||t.includes('neuromorphic'))return{l:'Neuromorphic',c:'b-red'};
+  if(t.includes('plasma')||t.includes('etch'))return{l:'Etch',c:'b-coral'};
+  if(t.includes('interconnect')||t.includes('metalliz'))return{l:'Interconnect',c:'b-coral'};
+  return{l:'Materials',c:'b-purple'};
+}
+
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function renderPaper(p,hot,showSum){
+  var b=getBadge(p);
+  var src=p.arxiv?'<span class="badge b-amber">arXiv</span>':'<span class="badge b-blue">저널</span>';
+  var oa=p.oa?'<span class="badge b-green">Open Access</span>':'';
+  var cite=p.citations!==null?'<span class="badge b-purple">인용 '+p.citations+'</span>':'';
+  var link=p.url?'<a class="alink" href="'+p.url+'" target="_blank">원문 &rarr;</a>':'';
+  var abs=(p.abstract||'').slice(0,220)+((p.abstract||'').length>220?'...':'');
+  var sumUrl='';
+  if(showSum&&p.abstract){
+    var sp='아래 논문의 핵심 내용을 반도체·재료공학 연구자를 위해 한국어로 3-5문장으로 요약해주세요.\n\n제목: '+p.title+'\n저자: '+p.authors+' ('+p.year+')\n저널: '+p.venue+'\n\n초록:\n'+p.abstract+'\n\n포함 내용: (1) 연구 목적/문제 (2) 핵심 방법 또는 발견 (3) 주요 결과 및 의의';
+    sumUrl='<a class="btn btn-claude btn-sm" href="https://claude.ai/new?q='+encodeURIComponent(sp)+'" target="_blank" style="margin-top:8px">&#x2726; 이 논문 요약하기 &rarr;</a>';
+  }
+  return '<div class="card'+(hot?' card-hot':'')+'"><div class="ptitle">'+esc(p.title)+'</div><div class="pmeta">'+esc(p.authors)+' &middot; '+p.year+(p.venue?' &middot; '+esc(p.venue):'')+' </div><div class="pabs">'+esc(abs)+'</div><div class="pfoot">'+src+'<span class="badge '+b.c+'">'+b.l+'</span>'+oa+cite+link+'</div>'+sumUrl+'</div>';
+}
+
+function loading(msg){return '<div style="padding:2.5rem;text-align:center;color:var(--muted);font-size:13px"><div class="dots" style="justify-content:center;margin-bottom:12px"><span></span><span></span><span></span></div>'+msg+'</div>';}
+
+function dedup(arr){
+  var seen=new Set();
+  return arr.filter(function(p){var k=p.title.toLowerCase().slice(0,50);if(seen.has(k))return false;seen.add(k);return true;});
+}
+
+function buildClaudePrompt(papers,ctx){
+  var list=papers.slice(0,12).map(function(p,i){return'['+( i+1)+'] '+p.title+'\n저자: '+p.authors+' ('+p.year+') | 저널: '+(p.venue||'N/A')+' | 인용: '+(p.citations!=null?p.citations:'N/A')+'회\n초록: '+(p.abstract||'').slice(0,280);}).join('\n\n---\n\n');
+  return '반도체·재료공학 전문가로서 아래 논문 목록을 분석해 한국어 브리핑을 작성해주세요.\n\n[맥락: '+ctx+']\n\n다음 항목으로 작성:\n1. 핵심 연구 트렌드 (2-3가지)\n2. 가장 주목할 논문과 이유\n3. 혁신적이거나 패러다임 전환 가능성이 있는 연구\n4. 실무·연구 시사점\n\n===논문===\n\n'+list;
+}
+
+function renderClaudeBox(papers,ctx){
+  var prompt=buildClaudePrompt(papers,ctx);
+  var url='https://claude.ai/new?q='+encodeURIComponent(prompt);
+  return '<div class="claude-box"><div class="claude-box-head">&#x2726; Claude로 종합 분석하기 (무료)</div><div style="font-size:13px;color:var(--dim);margin-bottom:10px;line-height:1.6">버튼을 누르면 논문 목록이 자동으로 Claude에 전달됩니다. 현재 구독으로 무료입니다.</div><div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn btn-claude" href="'+url+'" target="_blank">&#x2726; Claude에서 분석하기 &rarr;</a></div></div>';
+}
+
+async function runWeekly(){
+  var journals=[...document.querySelectorAll('#j-chips .chip.on')].map(function(c){return c.dataset.j;});
+  if(!journals.length){alert('저널을 1개 이상 선택해주세요');return;}
+  var maxPer=parseInt(document.getElementById('w-max').value);
+  var showSum=document.getElementById('w-sum').value==='yes';
+  var wKws=[...document.querySelectorAll('#w-kw-wrap .tag-item')].map(function(t){return t.dataset.kw;}).filter(Boolean);
+  var btn=document.getElementById('w-btn');btn.disabled=true;
+  var area=document.getElementById('res-weekly');
+  area.innerHTML=loading(journals.length+'개 저널 검색 중...');
+  try{
+    var all=[];
+    for(var i=0;i<journals.length;i++){
+      try{
+        var q=wKws.length?journals[i]+' '+wKws.slice(0,2).join(' '):journals[i];
+        var ps=await apiSS(q,{limit:maxPer+3,sort:'year'});
+        all=all.concat(ps.slice(0,maxPer));
+      }catch(e){console.warn(journals[i],e);}
+    }
+    all=dedup(all);
+    if(wKws.length){
+      var kwL=wKws.map(function(k){return k.toLowerCase();});
+      all=all.filter(function(p){
+        var txt=(p.title+' '+p.abstract).toLowerCase();
+        return kwL.some(function(k){return k.split(' ').some(function(w){return w.length>2&&txt.includes(w);});});
+      });
+    }
+    var stats='<div class="stat-row"><div class="stat"><div class="stat-n">'+journals.length+'</div><div class="stat-l">선택 저널</div></div><div class="stat"><div class="stat-n">'+all.length+'</div><div class="stat-l">수집 논문</div></div><div class="stat"><div class="stat-n">'+(wKws.length||'전체')+'</div><div class="stat-l">주제 필터</div></div><div class="stat"><div class="stat-n">무료</div><div class="stat-l">AI 분석</div></div></div>';
+    var ctx='Weekly Digest - 저널: '+journals.slice(0,3).join(', ')+(wKws.length?' / 키워드: '+wKws.join(', '):'');
+    var ph=all.length?all.map(function(p){return renderPaper(p,false,showSum);}).join(''):'<div class="empty">선택한 필터에 맞는 논문이 없습니다. 키워드를 줄이거나 저널을 추가해보세요.</div>';
+    area.innerHTML=stats+renderClaudeBox(all,ctx)+'<div class="section-head">논문 목록 <span class="count-pill">'+all.length+'편</span></div>'+ph;
+  }catch(e){area.innerHTML='<div class="empty">오류: '+e.message+'</div>';}
+  btn.disabled=false;
+}
+
+async function runSearch(){
+  var query=document.getElementById('s-query').value.trim();if(!query)return;
+  var year=document.getElementById('s-year').value;
+  var sort=document.getElementById('s-sort').value;
+  var limit=parseInt(document.getElementById('s-limit').value);
+  var minCite=parseInt(document.getElementById('s-cite').value)||0;
+  var selJ=[...document.querySelectorAll('#s-j-chips .chip.on')].map(function(c){return c.dataset.j2;});
+  var wantOA=document.getElementById('opt-oa').classList.contains('on');
+  var wantArxiv=document.getElementById('opt-arxiv').classList.contains('on');
+  var btn=document.getElementById('s-btn');btn.disabled=true;
+  var area=document.getElementById('res-search');
+  area.innerHTML=loading('논문 검색 중...');
+  try{
+    var q=selJ.length?query+' '+selJ[0]:query;
+    var papers=await apiSS(q,{limit:limit+10,sort:sort});
+    papers=dedup(papers);
+    if(year)papers=papers.filter(function(p){return String(p.year)===year;});
+    if(minCite>0)papers=papers.filter(function(p){return p.citations!==null&&p.citations>=minCite;});
+    if(wantOA)papers=papers.filter(function(p){return p.oa;});
+    if(!wantArxiv)papers=papers.filter(function(p){return !p.arxiv;});
+    papers=papers.slice(0,limit);
+    var ctx='주제 검색 "'+query+'"'+(year?' ('+year+'년)':'')+(minCite?' / 인용 '+minCite+'회+':'');
+    area.innerHTML=renderClaudeBox(papers,ctx)+'<div class="section-head">'+papers.length+'편 검색됨</div>'+(papers.length?papers.map(function(p){return renderPaper(p,false,true);}).join(''):'<div class="empty">결과 없음. 영문 키워드나 더 일반적인 검색어를 사용해보세요.</div>');
+  }catch(e){area.innerHTML='<div class="empty">오류: '+e.message+'<br>잠시 후 다시 시도해주세요.</div>';}
+  btn.disabled=false;
+}
+document.getElementById('s-query').addEventListener('keydown',function(e){if(e.key==='Enter')runSearch();});
+function qs(q){document.getElementById('s-query').value=q;runSearch();}
+
+async function runWatch(){
+  var kws=[...document.querySelectorAll('#kw-wrap .tag-item')].map(function(t){return t.dataset.kw;}).filter(Boolean);
+  if(!kws.length){alert('키워드를 1개 이상 추가해주세요');return;}
+  var limit=parseInt(document.getElementById('wd-lim').value);
+  var sort=document.getElementById('wd-sort').value;
+  var btn=document.getElementById('wd-btn');btn.disabled=true;
+  var area=document.getElementById('res-watch');
+  area.innerHTML=loading(kws.length+'개 키워드 모니터링 중...');
+  try{
+    var all=[];
+    for(var i=0;i<kws.length;i++){
+      try{var ps=await apiSS(kws[i],{limit:limit+2,sort:sort});all=all.concat(ps);}catch(e){console.warn(kws[i],e);}
+    }
+    all=dedup(all);
+    var stats='<div class="stat-row"><div class="stat"><div class="stat-n">'+kws.length+'</div><div class="stat-l">모니터 키워드</div></div><div class="stat"><div class="stat-n">'+all.length+'</div><div class="stat-l">탐지 논문</div></div><div class="stat"><div class="stat-n">실시간</div><div class="stat-l">업데이트</div></div><div class="stat"><div class="stat-n">무료</div><div class="stat-l">AI 분석</div></div></div>';
+    var ctx='분야 모니터 - 키워드: '+kws.join(', ');
+    area.innerHTML=stats+renderClaudeBox(all,ctx)+'<div class="section-head">탐지 논문 <span class="count-pill">'+all.length+'편</span></div>'+all.map(function(p){return renderPaper(p,false,true);}).join('');
+  }catch(e){area.innerHTML='<div class="empty">오류: '+e.message+'</div>';}
+  btn.disabled=false;
+}
+
+async function runHot(){
+  var fields=[...document.querySelectorAll('#hot-chips .chip.on')].map(function(c){return c.dataset.hf;});
+  if(!fields.length){alert('분야를 1개 이상 선택해주세요');return;}
+  var pool=parseInt(document.getElementById('hot-pool').value);
+  var sort=document.getElementById('hot-sort').value;
+  var btn=document.getElementById('hot-btn');btn.disabled=true;
+  var area=document.getElementById('res-hot');
+  area.innerHTML=loading('논문 수집 중...');
+  try{
+    var all=[];
+    for(var i=0;i<fields.length;i++){
+      try{var ps=await apiSS(fields[i],{limit:Math.ceil(pool/Math.max(fields.length,1))+3,sort:sort});all=all.concat(ps);}catch(e){console.warn(fields[i],e);}
+    }
+    all=dedup(all).slice(0,pool);
+    var ctx='혁신 논문 감지 - 분야: '+fields.map(function(f){return f.split(' ')[0];}).join(', ')+' / '+pool+'편 분석';
+    area.innerHTML=renderClaudeBox(all,ctx)+'<div class="section-head">분석 대상 <span class="count-pill">'+all.length+'편</span></div>'+all.map(function(p){return renderPaper(p,true,true);}).join('');
+  }catch(e){area.innerHTML='<div class="empty">오류: '+e.message+'</div>';}
+  btn.disabled=false;
+}
+</script>
+</body>
+</html>
