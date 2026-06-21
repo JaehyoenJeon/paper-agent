@@ -49,9 +49,9 @@ select option{background:var(--bg2)}
 .jt th{text-align:left;padding:6px 8px;color:var(--muted);font-weight:500;border-bottom:0.5px solid var(--border2);font-size:11px;text-transform:uppercase;letter-spacing:.04em}
 .jt td{padding:6px 8px;border-bottom:0.5px solid var(--border);color:var(--text);vertical-align:middle}
 .jt tr:last-child td{border-bottom:none}
-.jt tr:hover td{background:rgba(255,255,255,.03)}
+.jt tr:hover td{background:rgba(255,255,255,.025)}
 .jt .if-val{color:var(--amber);font-family:'JetBrains Mono',monospace;font-weight:500}
-.jt input[type=checkbox]{width:16px;height:16px;accent-color:var(--accent);cursor:pointer;margin:0}
+.jt input[type=checkbox]{width:16px;height:16px;accent-color:var(--accent);cursor:pointer}
 .jt-ctrl{display:flex;gap:8px;margin-bottom:8px;align-items:center}
 .jt-ctrl button{font-size:11px;padding:3px 10px;height:26px;border-radius:6px;border:0.5px solid var(--border2);background:var(--bg2);color:var(--muted);cursor:pointer}
 .jt-ctrl button:hover{color:var(--text)}
@@ -68,9 +68,8 @@ select option{background:var(--bg2)}
 .sum-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
 .sum-item{background:var(--bg3);border-radius:8px;padding:9px 11px}
 .sum-item-lbl{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
-.sum-item-val{font-size:12px;color:var(--text);line-height:1.6}
+.sum-item-val{font-size:12px;color:var(--text);line-height:1.65}
 .sum-result{background:var(--bg3);border-radius:8px;padding:9px 11px;margin-bottom:8px}
-.sum-translating{font-size:12px;color:var(--muted);font-style:italic;padding:6px 0}
 /* 배지 */
 .badge{font-size:11px;padding:3px 7px;border-radius:5px;font-weight:500}
 .b-blue{background:rgba(79,142,247,.14);color:#7bb3f9}
@@ -82,17 +81,22 @@ select option{background:var(--bg2)}
 .b-coral{background:rgba(251,146,60,.11);color:#fb923c}
 .alink{font-size:12px;color:var(--accent);text-decoration:none;margin-left:auto}
 .alink:hover{text-decoration:underline}
-/* stat */
+/* 통계 */
 .stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:1.2rem}
 .stat{background:var(--bg3);border-radius:var(--r);padding:11px;text-align:center}
 .stat-n{font-size:20px;font-weight:600;color:var(--text);font-family:'JetBrains Mono',monospace}
 .stat-l{font-size:11px;color:var(--muted);margin-top:2px}
 /* 기타 */
 .empty{text-align:center;padding:3rem 1rem;color:var(--muted);font-size:14px;line-height:1.8}
+.err-box{background:rgba(248,113,113,.08);border:0.5px solid rgba(248,113,113,.3);border-radius:var(--r);padding:10px 14px;font-size:12px;color:var(--red);margin-bottom:12px;line-height:1.6}
+.diag-box{background:rgba(251,191,36,.06);border:0.5px solid rgba(251,191,36,.25);border-radius:var(--r);padding:12px 14px;font-size:12px;color:var(--amber);margin-bottom:1.2rem;line-height:1.7}
+.diag-box pre{font-family:'JetBrains Mono',monospace;font-size:11px;margin-top:6px;white-space:pre-wrap;word-break:break-all}
 .dots{display:inline-flex;gap:4px}
 .dots span{width:5px;height:5px;border-radius:50%;background:var(--accent);animation:bop 1.2s infinite}
 .dots span:nth-child(2){animation-delay:.2s}.dots span:nth-child(3){animation-delay:.4s}
 @keyframes bop{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-5px)}}
+.progress-bar{height:3px;background:var(--bg3);border-radius:2px;margin-top:10px;overflow:hidden}
+.progress-fill{height:100%;background:var(--accent);border-radius:2px;transition:width .3s}
 .tag-wrap{display:flex;flex-wrap:wrap;gap:5px;border:0.5px solid var(--border2);border-radius:var(--r);padding:6px 8px;background:var(--bg2);min-height:38px;align-items:center}
 .tag-item{background:rgba(79,142,247,.14);color:var(--accent);font-size:12px;padding:2px 8px;border-radius:4px;display:flex;align-items:center;gap:4px}
 .tag-item button{background:none;border:none;cursor:pointer;color:var(--accent);font-size:13px;padding:0;line-height:1;opacity:.7}
@@ -104,16 +108,13 @@ select option{background:var(--bg2)}
 .section-head{font-size:13px;font-weight:500;color:var(--text);margin-bottom:1rem;display:flex;align-items:center;gap:8px}
 .count-pill{font-size:11px;padding:2px 8px;border-radius:20px;background:var(--bg3);color:var(--muted)}
 .just-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(248,113,113,.12);color:var(--red);border:0.5px solid rgba(248,113,113,.3)}
-.progress-bar{height:3px;background:var(--bg3);border-radius:2px;margin-top:10px;overflow:hidden}
-.progress-fill{height:100%;background:var(--accent);border-radius:2px;transition:width .3s}
 @media(max-width:640px){
-  .g2,.g3{grid-template-columns:1fr}
+  .g2,.g3,.sum-grid,.stat-row{grid-template-columns:1fr 1fr}
   .stat-row{grid-template-columns:repeat(2,1fr)}
+  .sum-grid{grid-template-columns:1fr}
   .tab{font-size:11px;padding:7px 2px}
-  .topbar{padding:11px 14px}
   .main{padding:1.2rem 1rem 4rem}
   .logo-sub{display:none}
-  .sum-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -126,33 +127,32 @@ select option{background:var(--bg2)}
 </div>
 <div class="main">
   <div class="tab-row">
-    <div class="tab on"  onclick="switchTab('weekly',this)">&#x1F4C5; Weekly Digest</div>
-    <div class="tab"     onclick="switchTab('just',this)">&#x1F534; Just Published</div>
-    <div class="tab"     onclick="switchTab('watch',this)">&#x1F441; 분야 모니터</div>
-    <div class="tab"     onclick="switchTab('hot',this)">&#x1F525; 혁신 논문</div>
+    <div class="tab on" onclick="switchTab('weekly',this)">&#x1F4C5; Weekly Digest</div>
+    <div class="tab"    onclick="switchTab('just',this)">&#x1F534; Just Published</div>
+    <div class="tab"    onclick="switchTab('watch',this)">&#x1F441; 분야 모니터</div>
+    <div class="tab"    onclick="switchTab('hot',this)">&#x1F525; 혁신 논문</div>
   </div>
 
-  <!-- ===================== WEEKLY ===================== -->
+  <!-- ========== WEEKLY ========== -->
   <div id="panel-weekly" class="panel on">
     <div class="info-box">
       <strong>Weekly Digest</strong> — IF 상위 저널의 최신 논문을 수집합니다.
-      체크박스로 검색 대상 저널을 선택하고, 주제 키워드로 원하는 분야만 필터링할 수 있습니다.
+      체크박스로 저널을 선택하고 주제 키워드로 필터링하세요.
     </div>
-
-    <div class="lbl">저널 선택 <span style="font-size:11px;color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0">— IF 내림차순 · 체크로 검색 포함 여부 선택</span></div>
+    <div class="lbl">저널 선택 <span style="font-size:11px;color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0">— IF 내림차순</span></div>
     <div class="jt-ctrl">
-      <button onclick="setAllJournals(true)">전체 선택</button>
-      <button onclick="setAllJournals(false)">전체 해제</button>
-      <span style="font-size:11px;color:var(--muted);margin-left:4px" id="j-count-lbl">20개 선택됨</span>
+      <button onclick="setAllJ(true)">전체 선택</button>
+      <button onclick="setAllJ(false)">전체 해제</button>
+      <span id="j-cnt" style="font-size:11px;color:var(--muted);margin-left:4px">20개 선택됨</span>
     </div>
-    <table class="jt" id="journal-table">
-      <thead><tr><th style="width:32px"></th><th style="width:28px">#</th><th>저널명</th><th style="width:80px">IF (2024)</th><th style="width:100px">분야</th></tr></thead>
-      <tbody id="journal-tbody"></tbody>
-    </table>
+    <table class="jt"><thead><tr>
+      <th style="width:32px"></th><th style="width:24px">#</th>
+      <th>저널명</th><th style="width:75px">IF</th><th style="width:90px">분야</th>
+    </tr></thead><tbody id="j-tbody"></tbody></table>
 
-    <div class="lbl">주제 키워드 필터 <span style="font-size:11px;color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0">(없으면 전체 표시)</span></div>
+    <div class="lbl">주제 키워드 필터 <span style="font-size:11px;color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0">(없으면 전체)</span></div>
     <div class="tag-wrap" id="w-kw-wrap">
-      <input type="text" id="w-kw-input" placeholder="키워드 입력 후 Enter (예: FinFET, ALD, GaN...)" onkeydown="addWKw(event)">
+      <input type="text" id="w-kw-in" placeholder="Enter로 추가 (예: FinFET, ALD...)" onkeydown="addWKw(event)">
     </div>
     <div style="font-size:11px;color:var(--muted);margin-top:4px;margin-bottom:8px">Enter로 추가 · x로 삭제</div>
     <div class="chip-row" style="margin-bottom:13px">
@@ -187,7 +187,6 @@ select option{background:var(--bg2)}
           <option value="3">3편</option>
           <option value="5" selected>5편</option>
           <option value="10">10편</option>
-          <option value="20">20편</option>
         </select>
       </div>
     </div>
@@ -195,18 +194,17 @@ select option{background:var(--bg2)}
     <div id="res-weekly" style="margin-top:1.4rem"><div class="empty">Digest 생성 버튼을 눌러주세요</div></div>
   </div>
 
-  <!-- ===================== JUST PUBLISHED ===================== -->
+  <!-- ========== JUST PUBLISHED ========== -->
   <div id="panel-just" class="panel">
     <div class="info-box">
-      <strong>Just Published</strong> — 선택된 저널에서 <strong>지난 7일간 게재된 논문</strong>을 자동으로 가져옵니다.
-      탭에 들어오면 즉시 스캔을 시작합니다.
+      <strong>Just Published</strong> — 20개 저널 전체에서 최신 논문을 자동 스캔합니다. 탭 진입 시 즉시 시작됩니다.
     </div>
-    <div id="res-just"><div class="empty">페이지 로딩 중...</div></div>
+    <div id="res-just"><div class="empty">로딩 중...</div></div>
   </div>
 
-  <!-- ===================== 분야 모니터 ===================== -->
+  <!-- ========== 분야 모니터 ========== -->
   <div id="panel-watch" class="panel">
-    <div class="info-box"><strong>분야 모니터</strong> — 저널과 무관하게 관심 키워드로 전체 논문 DB를 모니터링합니다.</div>
+    <div class="info-box"><strong>분야 모니터</strong> — 저널 무관, 키워드 기반으로 전체 논문 DB를 실시간 모니터링합니다.</div>
     <div class="lbl">관심 키워드</div>
     <div class="tag-wrap" id="kw-wrap">
       <div class="tag-item" data-kw="semiconductor fabrication"><span>semiconductor fabrication</span><button onclick="this.parentElement.remove()">x</button></div>
@@ -255,14 +253,17 @@ select option{background:var(--bg2)}
         </select>
       </div>
     </div>
-    <button class="btn btn-primary" id="wd-btn" onclick="runWatch()">&#x25B6; 모니터 실행</button>
-    <div id="res-watch" style="margin-top:1.4rem"><div class="empty">키워드를 설정하고 실행해주세요</div></div>
+    <div style="display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap">
+      <button class="btn btn-primary" id="wd-btn" onclick="runWatch()">&#x25B6; 모니터 실행</button>
+      <button class="btn btn-sm" onclick="runApiTest('watch')" style="height:38px">&#x1F50D; API 연결 테스트</button>
+    </div>
+    <div id="diag-watch"></div>
+    <div id="res-watch"><div class="empty">키워드를 설정하고 실행해주세요</div></div>
   </div>
 
-  <!-- ===================== 혁신 논문 ===================== -->
+  <!-- ========== 혁신 논문 ========== -->
   <div id="panel-hot" class="panel">
-    <div class="info-box"><strong>혁신 논문 감지</strong> — 선택한 분야 + 직접 입력한 키워드로 논문을 수집하고 구조화 요약을 제공합니다.</div>
-
+    <div class="info-box"><strong>혁신 논문 감지</strong> — 선택 분야 + 직접 입력 키워드로 논문을 수집합니다.</div>
     <div class="lbl">분야 선택</div>
     <div class="chip-row" id="hot-chips">
       <span class="chip on" data-hf="semiconductor fabrication CMOS process">CMOS Fabrication</span>
@@ -276,7 +277,7 @@ select option{background:var(--bg2)}
       <span class="chip" data-hf="NAND flash 3D memory">NAND Flash</span>
       <span class="chip" data-hf="MRAM spintronic memory">STT-MRAM</span>
       <span class="chip" data-hf="MoS2 graphene 2D semiconductor">2D Materials</span>
-      <span class="chip" data-hf="perovskite photovoltaic solar">Perovskite</span>
+      <span class="chip" data-hf="perovskite photovoltaic solar">Perovskite Solar</span>
       <span class="chip" data-hf="memristor neuromorphic computing">Memristor</span>
       <span class="chip" data-hf="quantum computing qubit">Quantum Computing</span>
       <span class="chip" data-hf="high-k dielectric gate oxide">High-k Dielectric</span>
@@ -286,13 +287,11 @@ select option{background:var(--bg2)}
       <span class="chip" data-hf="ion implantation annealing">Ion Implantation</span>
       <span class="chip" data-hf="contact resistance ohmic silicide">Contact/Silicide</span>
     </div>
-
-    <div class="lbl" style="margin-top:4px">추가 키워드 <span style="font-size:11px;color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0">(위 분야 외 직접 입력)</span></div>
+    <div class="lbl" style="margin-top:4px">추가 키워드 <span style="font-size:11px;color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0">(직접 입력)</span></div>
     <div class="tag-wrap" id="hot-kw-wrap">
-      <input type="text" id="hot-kw-input" placeholder="키워드 입력 후 Enter" onkeydown="addHotKw(event)">
+      <input type="text" id="hot-kw-in" placeholder="키워드 입력 후 Enter" onkeydown="addHotKw(event)">
     </div>
     <div style="font-size:11px;color:var(--muted);margin-top:4px;margin-bottom:13px">Enter로 추가 · x로 삭제</div>
-
     <div class="g2">
       <div><div class="lbl">기간</div>
         <select id="hot-period">
@@ -310,224 +309,254 @@ select option{background:var(--bg2)}
         </select>
       </div>
     </div>
-    <button class="btn btn-primary" id="hot-btn" onclick="runHot()">&#x1F525; 혁신 논문 탐지</button>
-    <div id="res-hot" style="margin-top:1.4rem"><div class="empty">분야를 선택하고 탐지를 실행해주세요</div></div>
+    <div style="display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap">
+      <button class="btn btn-primary" id="hot-btn" onclick="runHot()">&#x1F525; 혁신 논문 탐지</button>
+      <button class="btn btn-sm" onclick="runApiTest('hot')" style="height:38px">&#x1F50D; API 연결 테스트</button>
+    </div>
+    <div id="diag-hot"></div>
+    <div id="res-hot"><div class="empty">분야를 선택하고 탐지를 실행해주세요</div></div>
   </div>
 </div>
 
 <script>
 /* ============================================================
-   저널 데이터 — IF 내림차순 정렬
+   저널 데이터 (IF 내림차순)
    ============================================================ */
 var JOURNALS = [
-  {name:"Nature Nanotechnology",   if_:38.1, field:"나노·소자"},
-  {name:"Nature Materials",        if_:37.2, field:"재료·반도체"},
-  {name:"Nature Electronics",      if_:34.3, field:"반도체·소자"},
-  {name:"Advanced Functional Materials", if_:18.5, field:"기능성재료"},
-  {name:"Advanced Materials",      if_:27.4, field:"재료·소자"},
-  {name:"Materials Today",         if_:14.2, field:"재료"},
-  {name:"Small",                   if_:13.0, field:"나노·소자"},
-  {name:"ACS Nano",                if_:15.8, field:"나노재료"},
-  {name:"Nano Letters",            if_:9.6,  field:"나노소자"},
-  {name:"npj Computational Materials", if_:9.7, field:"계산재료"},
-  {name:"npj 2D Materials and Applications", if_:9.7, field:"2D재료"},
-  {name:"IEEE Transactions on Electron Devices", if_:4.9, field:"전자소자"},
-  {name:"IEEE Electron Device Letters",          if_:4.4, field:"전자소자"},
-  {name:"Applied Physics Letters", if_:3.5, field:"응용물리"},
-  {name:"Journal of Applied Physics", if_:2.7, field:"응용물리"},
-  {name:"Microelectronic Engineering", if_:2.6, field:"공정"},
-  {name:"Journal of Vacuum Science Technology", if_:2.4, field:"공정·박막"},
-  {name:"Semiconductor Science and Technology",  if_:2.1, field:"반도체"},
-  {name:"Thin Solid Films",        if_:2.1, field:"박막공정"},
-  {name:"ECS Journal of Solid State Science",    if_:1.8, field:"고체화학"}
+  {name:"Nature Nanotechnology",           if_:38.1, field:"나노·소자"},
+  {name:"Nature Materials",                if_:37.2, field:"재료·반도체"},
+  {name:"Nature Electronics",              if_:34.3, field:"반도체·소자"},
+  {name:"Advanced Functional Materials",   if_:18.5, field:"기능성재료"},
+  {name:"Advanced Materials",              if_:27.4, field:"재료·소자"},
+  {name:"Materials Today",                 if_:14.2, field:"재료"},
+  {name:"ACS Nano",                        if_:15.8, field:"나노재료"},
+  {name:"Small",                           if_:13.0, field:"나노·소자"},
+  {name:"npj Computational Materials",     if_:9.7,  field:"계산재료"},
+  {name:"npj 2D Materials and Applications",if_:9.7, field:"2D재료"},
+  {name:"Nano Letters",                    if_:9.6,  field:"나노소자"},
+  {name:"IEEE Transactions on Electron Devices",if_:4.9,field:"전자소자"},
+  {name:"IEEE Electron Device Letters",    if_:4.4,  field:"전자소자"},
+  {name:"Applied Physics Letters",         if_:3.5,  field:"응용물리"},
+  {name:"Journal of Applied Physics",      if_:2.7,  field:"응용물리"},
+  {name:"Microelectronic Engineering",     if_:2.6,  field:"공정"},
+  {name:"Journal of Vacuum Science Technology",if_:2.4,field:"공정·박막"},
+  {name:"Semiconductor Science and Technology",if_:2.1,field:"반도체"},
+  {name:"Thin Solid Films",                if_:2.1,  field:"박막공정"},
+  {name:"ECS Journal of Solid State Science",if_:1.8,field:"고체화학"}
 ];
-/* IF 내림차순 정렬 */
-JOURNALS.sort(function(a,b){ return b.if_ - a.if_; });
 
-/* 저널 테이블 렌더링 */
-function renderJournalTable() {
-  var tbody = document.getElementById('journal-tbody');
-  tbody.innerHTML = JOURNALS.map(function(j, i) {
+/* 저널 테이블 렌더 */
+(function(){
+  var tb = document.getElementById('j-tbody');
+  tb.innerHTML = JOURNALS.map(function(j,i){
     return '<tr>'
-      + '<td><input type="checkbox" checked id="jchk-' + i + '" onchange="updateJCount()"></td>'
-      + '<td style="color:var(--muted)">' + (i+1) + '</td>'
-      + '<td>' + esc(j.name) + '</td>'
-      + '<td class="if-val">' + j.if_.toFixed(1) + '</td>'
-      + '<td style="color:var(--muted);font-size:11px">' + j.field + '</td>'
-      + '</tr>';
+      +'<td><input type="checkbox" id="jc'+i+'" checked onchange="updJCnt()"></td>'
+      +'<td style="color:var(--muted)">'+(i+1)+'</td>'
+      +'<td>'+esc(j.name)+'</td>'
+      +'<td class="if-val">'+j.if_.toFixed(1)+'</td>'
+      +'<td style="color:var(--muted);font-size:11px">'+j.field+'</td>'
+      +'</tr>';
   }).join('');
+})();
+
+function setAllJ(v){
+  JOURNALS.forEach(function(_,i){ var el=document.getElementById('jc'+i); if(el) el.checked=v; });
+  updJCnt();
 }
-function setAllJournals(v) {
-  JOURNALS.forEach(function(_, i){
-    var el = document.getElementById('jchk-' + i);
-    if (el) el.checked = v;
-  });
-  updateJCount();
+function updJCnt(){
+  var n=JOURNALS.filter(function(_,i){ var el=document.getElementById('jc'+i); return el&&el.checked; }).length;
+  var el=document.getElementById('j-cnt'); if(el) el.textContent=n+'개 선택됨';
 }
-function updateJCount() {
-  var n = JOURNALS.filter(function(_, i){ var el = document.getElementById('jchk-'+i); return el && el.checked; }).length;
-  var lbl = document.getElementById('j-count-lbl');
-  if (lbl) lbl.textContent = n + '개 선택됨';
-}
-function getSelectedJournals() {
-  return JOURNALS.filter(function(_, i){ var el = document.getElementById('jchk-'+i); return el && el.checked; }).map(function(j){ return j.name; });
+function getSelJ(){
+  return JOURNALS.filter(function(_,i){ var el=document.getElementById('jc'+i); return el&&el.checked; }).map(function(j){return j.name;});
 }
 
 /* ============================================================
    비연구 논문 필터
    ============================================================ */
-var JUNK_RE = [
-  /highlights of recent/i,/strengthening global/i,/\beditorial\b/i,
-  /^erratum/i,/^correction\b/i,/^retraction/i,/^reply to/i,
-  /^comment on/i,/^letter to the editor/i,/\bbook review\b/i,
-  /^issue information/i,/^(front|back) cover/i,/^table of contents/i,
-  /^masthead/i,/\bnewsletter\b/i,/\bin memoriam\b/i,/\baddendum\b/i,
-  /expression of concern/i,/^acknowledgment/i,/author index/i,
-  /^special issue/i,/^preface\b/i,/^foreword\b/i,/global ties/i,
-  /annual report/i,/^spotlight\b/i,/^notice\b/i,/^news\b/i,
-  /what to expect/i,/^introduction to/i,/^overview of/i
-];
-function isJunk(p, minAbs) {
-  for (var i = 0; i < JUNK_RE.length; i++) { if (JUNK_RE[i].test(p.title)) return true; }
-  if ((p.abstract||'').length < (minAbs||0)) return true;
-  return false;
-}
+var JUNK_RE=[/highlights of recent/i,/strengthening global/i,/\beditorial\b/i,
+  /^erratum/i,/^correction\b/i,/^retraction/i,/^reply to/i,/^comment on/i,
+  /^letter to the editor/i,/\bbook review\b/i,/^issue information/i,
+  /^(front|back) cover/i,/^table of contents/i,/^masthead/i,/\bnewsletter\b/i,
+  /\bin memoriam\b/i,/\baddendum\b/i,/expression of concern/i,/^acknowledgment/i,
+  /author index/i,/^special issue/i,/^preface\b/i,/^foreword\b/i,/global ties/i,
+  /annual report/i,/^spotlight\b/i,/^notice\b/i,/^news\b/i];
+
+function isJunk(p){ for(var i=0;i<JUNK_RE.length;i++) if(JUNK_RE[i].test(p.title)) return true; return false; }
 
 /* ============================================================
    탭 전환
    ============================================================ */
-var justLoaded = false;
-function switchTab(id, el) {
-  document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('on'); });
-  document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('on'); });
+var justLoaded=false;
+function switchTab(id,el){
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on');});
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on');});
   el.classList.add('on');
-  document.getElementById('panel-' + id).classList.add('on');
-  if (id === 'just' && !justLoaded) { justLoaded = true; runJustPublished(); }
+  document.getElementById('panel-'+id).classList.add('on');
+  if(id==='just'&&!justLoaded){justLoaded=true;runJustPublished();}
 }
-document.querySelectorAll('#hot-chips .chip').forEach(function(c){ c.onclick=function(){ c.classList.toggle('on'); }; });
+document.querySelectorAll('#hot-chips .chip').forEach(function(c){c.onclick=function(){c.classList.toggle('on');};});
 
 /* ============================================================
    태그 입력
    ============================================================ */
-function mkTag(kw, wrapId, inpId) {
-  var wrap = document.getElementById(wrapId), inp = document.getElementById(inpId);
-  if ([...wrap.querySelectorAll('.tag-item')].some(function(t){ return t.dataset.kw === kw; })) return;
-  var t = document.createElement('div'); t.className='tag-item'; t.dataset.kw=kw;
+function mkTag(kw,wrapId,inpId){
+  var wrap=document.getElementById(wrapId),inp=document.getElementById(inpId);
+  if([...wrap.querySelectorAll('.tag-item')].some(function(t){return t.dataset.kw===kw;})) return;
+  var t=document.createElement('div');t.className='tag-item';t.dataset.kw=kw;
   t.innerHTML='<span>'+esc(kw)+'</span> <button onclick="this.parentElement.remove()">x</button>';
-  wrap.insertBefore(t, inp);
+  wrap.insertBefore(t,inp);
 }
-function addTag(e){ if(e.key!=='Enter')return; var v=e.target.value.trim(); if(!v)return; mkTag(v,'kw-wrap','kw-input'); e.target.value=''; }
-function addKw(kw){ mkTag(kw,'kw-wrap','kw-input'); }
-function addWKw(e){ if(e.key!=='Enter')return; var v=e.target.value.trim(); if(!v)return; mkTag(v,'w-kw-wrap','w-kw-input'); e.target.value=''; }
-function addWKwD(kw){ mkTag(kw,'w-kw-wrap','w-kw-input'); }
-function addHotKw(e){ if(e.key!=='Enter')return; var v=e.target.value.trim(); if(!v)return; mkTag(v,'hot-kw-wrap','hot-kw-input'); e.target.value=''; }
+function addTag(e){if(e.key!=='Enter')return;var v=e.target.value.trim();if(!v)return;mkTag(v,'kw-wrap','kw-input');e.target.value='';}
+function addKw(kw){mkTag(kw,'kw-wrap','kw-input');}
+function addWKw(e){if(e.key!=='Enter')return;var v=e.target.value.trim();if(!v)return;mkTag(v,'w-kw-wrap','w-kw-in');e.target.value='';}
+function addWKwD(kw){mkTag(kw,'w-kw-wrap','w-kw-in');}
+function addHotKw(e){if(e.key!=='Enter')return;var v=e.target.value.trim();if(!v)return;mkTag(v,'hot-kw-wrap','hot-kw-in');e.target.value='';}
 
 /* ============================================================
    Semantic Scholar API
-   — sort 파라미터 제거 (API가 지원하지 않아 오류 유발)
-   — 최신순 정렬은 클라이언트에서 year 기준으로 처리
+   ※ sort 파라미터 완전 제거 (지원 안 됨 → 오류 원인)
    ============================================================ */
-async function apiSS(query, limit) {
-  var params = new URLSearchParams({
-    query: String(query),
-    limit: String(Math.min(parseInt(limit)||10, 100)),
-    fields: 'title,authors,year,abstract,venue,citationCount,externalIds,openAccessPdf,publicationTypes'
+async function apiSS(query, limit){
+  var params=new URLSearchParams({
+    query:String(query),
+    limit:String(Math.min(parseInt(limit)||10,100)),
+    fields:'title,authors,year,abstract,venue,citationCount,externalIds,openAccessPdf,publicationTypes'
   });
-  var resp = await fetch('https://api.semanticscholar.org/graph/v1/paper/search?' + params,
-    { headers: { 'Accept': 'application/json' } });
-  if (!resp.ok) { var t=await resp.text(); throw new Error('SS '+resp.status+': '+t.slice(0,80)); }
-  var data = await resp.json();
+  var resp=await fetch('https://api.semanticscholar.org/graph/v1/paper/search?'+params,
+    {headers:{Accept:'application/json'}});
+  if(!resp.ok){var t=await resp.text();throw new Error('HTTP '+resp.status+': '+t.slice(0,120));}
+  var data=await resp.json();
   return (data.data||[]).map(function(p){
-    return {
-      title:    (p.title||'').trim(),
-      authors:  (p.authors||[]).slice(0,4).map(function(a){return a.name;}).join(', '),
-      year:     p.year||0,
-      abstract: (p.abstract||'').trim(),
-      venue:    (p.venue||'').trim(),
-      citations: p.citationCount!=null ? p.citationCount : null,
-      url: p.externalIds&&p.externalIds.DOI ? 'https://doi.org/'+p.externalIds.DOI
-         : p.externalIds&&p.externalIds.ArXiv ? 'https://arxiv.org/abs/'+p.externalIds.ArXiv : null,
-      oa:    !!(p.openAccessPdf),
-      arxiv: !!(p.externalIds&&p.externalIds.ArXiv),
-      types: p.publicationTypes||[]
+    return{
+      title:(p.title||'').trim(),
+      authors:(p.authors||[]).slice(0,4).map(function(a){return a.name;}).join(', '),
+      year:p.year||0,
+      abstract:(p.abstract||'').trim(),
+      venue:(p.venue||'').trim(),
+      citations:p.citationCount!=null?p.citationCount:null,
+      url:(p.externalIds&&p.externalIds.DOI)?'https://doi.org/'+p.externalIds.DOI
+         :(p.externalIds&&p.externalIds.ArXiv)?'https://arxiv.org/abs/'+p.externalIds.ArXiv:null,
+      oa:!!(p.openAccessPdf),
+      arxiv:!!(p.externalIds&&p.externalIds.ArXiv),
+      types:p.publicationTypes||[]
     };
   });
 }
 
 /* ============================================================
+   API 연결 진단 (분야 모니터 / 혁신 논문 탭용)
+   ============================================================ */
+async function runApiTest(tab){
+  var diagId='diag-'+(tab==='watch'?'watch':'hot');
+  var diag=document.getElementById(diagId);
+  diag.innerHTML='<div class="diag-box">&#x1F50D; API 연결 테스트 중...</div>';
+  try{
+    var start=Date.now();
+    var ps=await apiSS('semiconductor transistor',3);
+    var ms=Date.now()-start;
+    if(ps.length>0){
+      diag.innerHTML='<div class="diag-box" style="color:var(--green);border-color:rgba(74,222,128,.3);background:rgba(74,222,128,.06)">'
+        +'&#x2705; <strong>API 정상 연결됨</strong> (응답 '+ms+'ms)<br>'
+        +'테스트 결과: '+ps.length+'편 수신 · 첫 논문: "'+esc(ps[0].title.slice(0,60))+'..."'
+        +'</div>';
+    } else {
+      diag.innerHTML='<div class="diag-box">&#x26A0;&#xFE0F; API 연결은 됐으나 결과 0건 (검색어 문제일 수 있음)</div>';
+    }
+  } catch(e){
+    diag.innerHTML='<div class="diag-box">'
+      +'&#x274C; <strong>API 연결 실패</strong><br>'
+      +'오류: '+esc(e.message)+'<br><br>'
+      +'<strong>이 오류가 뜬다면:</strong><br>'
+      +'· Claude.ai 화면에서 보고 있다면 → Vercel 링크(paper-agent-theta.vercel.app)에서 다시 시도하세요<br>'
+      +'· Vercel에서도 안 된다면 → Semantic Scholar API 일시 점검일 수 있습니다 (수분 후 재시도)'
+      +'</div>';
+  }
+}
+
+/* ============================================================
    유틸
    ============================================================ */
-function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function dedup(arr){
   var seen=new Set();
   return arr.filter(function(p){
     if(!p.title)return false;
     var k=p.title.toLowerCase().replace(/\s+/g,' ').slice(0,60);
-    if(seen.has(k))return false; seen.add(k); return true;
+    if(seen.has(k))return false;seen.add(k);return true;
   });
 }
 function loading(msg,pct){
-  var bar = pct!=null
-    ? '<div class="progress-bar"><div class="progress-fill" style="width:'+pct+'%"></div></div>'
-    : '';
+  var bar=pct!=null?'<div class="progress-bar"><div class="progress-fill" style="width:'+pct+'%"></div></div>':'';
   return '<div style="padding:2.5rem;text-align:center;color:var(--muted);font-size:13px">'
     +'<div class="dots" style="justify-content:center;margin-bottom:12px"><span></span><span></span><span></span></div>'
-    +msg+bar+'</div>';
+    +esc(msg)+bar+'</div>';
 }
 function statRow(items){
   return '<div class="stat-row">'+items.map(function(it){
     return '<div class="stat"><div class="stat-n">'+it[0]+'</div><div class="stat-l">'+it[1]+'</div></div>';
   }).join('')+'</div>';
 }
-function claudeBox(papers, ctx){
+function claudeBox(papers,ctx){
   var list=papers.slice(0,12).map(function(p,i){
-    return '['+(i+1)+'] '+p.title+'\n저자: '+p.authors+' ('+(p.year||'')+') | 저널: '+(p.venue||'N/A')+'\n초록: '+(p.abstract||'').slice(0,240);
+    return '['+(i+1)+'] '+p.title+'\n저자: '+p.authors+' ('+(p.year||'')+') | 저널: '+(p.venue||'N/A')+'\n초록: '+(p.abstract||'').slice(0,260);
   }).join('\n\n---\n\n');
   var prompt='반도체·재료공학 전문가로서 아래 논문 목록을 분석해 한국어 브리핑을 작성해주세요.\n[맥락: '+ctx+']\n\n1. 핵심 트렌드\n2. 가장 주목할 논문\n3. 혁신 가능성\n4. 실무 시사점\n\n'+list;
   return '<div class="claude-box"><div class="claude-box-head">&#x2726; Claude 종합 분석 (무료)</div>'
-    +'<div style="font-size:13px;color:var(--dim);margin-bottom:10px">전체 논문 목록을 Claude에 보내 종합 트렌드 브리핑을 받습니다.</div>'
+    +'<div style="font-size:13px;color:var(--dim);margin-bottom:10px">전체 논문 목록을 Claude에 보내 트렌드 브리핑을 받습니다.</div>'
     +'<a class="btn btn-claude" href="https://claude.ai/new?q='+encodeURIComponent(prompt)+'" target="_blank">&#x2726; 종합 분석하기 &rarr;</a></div>';
 }
 
 /* ============================================================
-   구조화 요약 — 초록을 섹션별로 분리 후 한국어 번역 Claude 링크 제공
+   구조화 요약 — 스마트 문장 추출 (번역 버튼 없음)
    ============================================================ */
-function makeSummaryBlock(p) {
-  var abs = (p.abstract||'').trim();
-  if (abs.length < 40) return '';
+function makeSummary(p){
+  var abs=(p.abstract||'').trim();
+  if(abs.length<40) return '';
 
   /* 문장 분리 */
-  var sents = abs.replace(/([.!?])\s+([A-Z])/g,'$1\n$2').split('\n')
+  var sents=abs.replace(/([.!?])\s+(?=[A-Z])/g,'$1|||').split('|||')
     .map(function(s){return s.trim();}).filter(function(s){return s.length>15;});
-  if (!sents.length) return '';
+  if(!sents.length) return '';
 
-  var purpose = sents.slice(0, Math.min(2,sents.length)).join(' ');
-  var result  = sents.slice(Math.max(0,sents.length-2)).join(' ');
-  var method  = sents.length >= 4 ? sents.slice(2,Math.min(4,sents.length-1)).join(' ') : '';
-  var nums    = (abs.match(/[\d.]+\s*(%|nm|eV|cm|V\b|A\b|W\b|K\b|GHz|MHz|GPa|mA|μA|nA|Ω)/g)||[]).slice(0,5);
+  /* 키워드 기반 분류 */
+  var purposeKw=['we present','we propose','we report','we demonstrate','we develop',
+    'we investigate','we study','this paper','this work','in this','herein','aim','goal','purpose'];
+  var methodKw=['fabricat','deposit','etch','anneal','sputter','grow','synthetiz','pattern',
+    'lithograph','using','via ','based on','by means','process','technique','approach'];
+  var resultKw=['achiev','demonstrat','show','exhibit','improve','enhanc','reduc','outperform',
+    'superior','result','obtain','record','highest','lowest','% ','nm ','eV ','times','fold'];
 
-  /* 한국어 번역 요청 Claude URL */
-  var translatePrompt = '다음 논문 초록의 각 섹션을 한국어로 번역하고, 반도체·재료공학 연구자 관점에서 핵심 내용을 간결하게 정리해주세요.\n\n'
-    + '논문 제목: '+p.title+'\n\n'
-    + '[연구 목적]\n'+purpose+'\n\n'
-    + (method?'[핵심 방법]\n'+method+'\n\n':'')
-    + '[주요 결과]\n'+result+'\n\n'
-    + '각 섹션을 한국어로 2-3문장씩 번역 및 요약해주세요. 수치와 핵심 용어는 그대로 유지해주세요.';
+  function match(s,kws){var sl=s.toLowerCase();return kws.some(function(k){return sl.includes(k);});}
 
-  var numsHtml = nums.length
-    ? '<div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:8px">'
-      +nums.map(function(n){return '<span class="badge b-amber">'+esc(n)+'</span>';}).join('')
-      +'</div>' : '';
+  var purp=sents.filter(function(s){return match(s,purposeKw);});
+  var meth=sents.filter(function(s){return match(s,methodKw);});
+  var res =sents.filter(function(s){return match(s,resultKw);});
+
+  /* 폴백 */
+  if(!purp.length) purp=sents.slice(0,2);
+  if(!res.length)  res =sents.slice(-2);
+
+  var purpose=purp.slice(0,2).join(' ');
+  var method =meth.slice(0,2).join(' ');
+  var result =res.slice(0,3).join(' ');
+  var nums=(abs.match(/[\d.]+\s*(%|nm|eV|cm|V\b|A\b|W\b|K\b|GHz|MHz|GPa|mA|μA|nA|Ω)/g)||[]).slice(0,6);
+
+  var numsHtml=nums.length
+    ?'<div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:8px">'
+      +nums.map(function(n){return '<span class="badge b-amber">'+esc(n)+'</span>';}).join('')+'</div>':'';
 
   return '<div class="sum-block">'
-    +'<div class="sum-label">&#x2726; 구조화 요약 (영문) · <a class="btn btn-claude btn-sm" href="https://claude.ai/new?q='+encodeURIComponent(translatePrompt)+'" target="_blank" style="vertical-align:middle">&#x2726; 한국어로 번역하기 &rarr;</a></div>'
+    +'<div class="sum-label">&#x2726; 구조화 요약</div>'
     +'<div class="sum-grid">'
-    +'<div class="sum-item"><div class="sum-item-lbl">&#x1F3AF; 연구 목적</div><div class="sum-item-val">'+esc(purpose.slice(0,220))+'</div></div>'
-    +(method?'<div class="sum-item"><div class="sum-item-lbl">&#x1F527; 핵심 방법</div><div class="sum-item-val">'+esc(method.slice(0,220))+'</div></div>':'<div></div>')
+    +'<div class="sum-item"><div class="sum-item-lbl">&#x1F3AF; 연구 목적</div>'
+    +'<div class="sum-item-val">'+esc(purpose.slice(0,400))+'</div></div>'
+    +(method?'<div class="sum-item"><div class="sum-item-lbl">&#x1F527; 핵심 방법</div>'
+    +'<div class="sum-item-val">'+esc(method.slice(0,400))+'</div></div>':'<div></div>')
     +'</div>'
-    +'<div class="sum-result"><div class="sum-item-lbl">&#x2705; 주요 결과</div><div class="sum-item-val">'+esc(result.slice(0,300))+'</div></div>'
-    +numsHtml
-    +'</div>';
+    +'<div class="sum-result"><div class="sum-item-lbl">&#x2705; 주요 결과</div>'
+    +'<div class="sum-item-val">'+esc(result.slice(0,500))+'</div></div>'
+    +numsHtml+'</div>';
 }
 
 /* ============================================================
@@ -551,135 +580,132 @@ function getBadge(p){
   return{l:'Materials',c:'b-purple'};
 }
 
-function renderPaper(p, hot){
+function renderPaper(p,hot){
   var b=getBadge(p);
   var src=p.arxiv?'<span class="badge b-amber">arXiv</span>':'<span class="badge b-blue">저널</span>';
   var oa=p.oa?'<span class="badge b-green">Open Access</span>':'';
   var cite=p.citations!==null?'<span class="badge b-purple">인용 '+p.citations+'</span>':'';
   var typeTag=(p.types&&p.types.includes('Review'))?'<span class="badge b-coral">Review</span>':'';
   var link=p.url?'<a class="alink" href="'+p.url+'" target="_blank">원문 &rarr;</a>':'';
-
-  var detailPrompt='다음 논문을 반도체·재료공학 연구자를 위해 한국어로 상세 분석해주세요.\n\n'
-    +'제목: '+p.title+'\n저자: '+p.authors+' ('+(p.year||'')+'\n저널: '+p.venue
+  var dp='다음 논문을 반도체·재료공학 연구자를 위해 한국어로 상세 분석해주세요.\n\n제목: '+p.title
+    +'\n저자: '+p.authors+' ('+(p.year||'')+')\n저널: '+p.venue
     +'\n\n초록:\n'+p.abstract
-    +'\n\n분석 항목:\n1. 연구 배경 및 목적\n2. 핵심 방법론\n3. 주요 결과 및 수치\n4. 이 분야에서의 의의\n5. 한계점 및 향후 연구 방향';
-
-  return '<div class="card'+(hot?' card-hot':'')+'">'+
-    '<div class="ptitle">'+esc(p.title)+'</div>'+
-    '<div class="pmeta">'+esc(p.authors)+' &middot; '+(p.year||'')+
-      (p.venue?' &middot; '+esc(p.venue):'')+' </div>'+
-    '<div class="pfoot">'+src+typeTag+'<span class="badge '+b.c+'">'+b.l+'</span>'+oa+cite+link+'</div>'+
-    makeSummaryBlock(p)+
-    '<a class="btn btn-claude btn-sm" href="https://claude.ai/new?q='+encodeURIComponent(detailPrompt)+
-      '" target="_blank" style="margin-top:10px">&#x2726; Claude 상세 분석 &rarr;</a>'+
-    '</div>';
+    +'\n\n분석 항목:\n1. 연구 배경 및 목적\n2. 핵심 방법론\n3. 주요 결과 및 수치\n4. 분야에서의 의의\n5. 한계점 및 향후 방향';
+  return '<div class="card'+(hot?' card-hot':'')+'"><div class="ptitle">'+esc(p.title)+'</div>'
+    +'<div class="pmeta">'+esc(p.authors)+' &middot; '+(p.year||'')+(p.venue?' &middot; '+esc(p.venue):'')+' </div>'
+    +'<div class="pfoot">'+src+typeTag+'<span class="badge '+b.c+'">'+b.l+'</span>'+oa+cite+link+'</div>'
+    +makeSummary(p)
+    +'<a class="btn btn-claude btn-sm" href="https://claude.ai/new?q='+encodeURIComponent(dp)+'" target="_blank" style="margin-top:10px">&#x2726; Claude 상세 분석 &rarr;</a>'
+    +'</div>';
 }
 
 /* ============================================================
    WEEKLY
    ============================================================ */
 async function runWeekly(){
-  var journals = getSelectedJournals();
+  var journals=getSelJ();
   if(!journals.length){alert('저널을 1개 이상 선택해주세요');return;}
-  var maxPer = parseInt(document.getElementById('w-max').value);
-  var wKws = [...document.querySelectorAll('#w-kw-wrap .tag-item')].map(function(t){return t.dataset.kw;}).filter(Boolean);
-  var btn=document.getElementById('w-btn'); btn.disabled=true;
+  var maxPer=parseInt(document.getElementById('w-max').value);
+  var wKws=[...document.querySelectorAll('#w-kw-wrap .tag-item')].map(function(t){return t.dataset.kw;}).filter(Boolean);
+  var btn=document.getElementById('w-btn');btn.disabled=true;
   var area=document.getElementById('res-weekly');
-  area.innerHTML=loading('0 / '+journals.length+' 저널 검색 중...', 0);
-  try{
-    var all=[];
-    for(var i=0;i<journals.length;i++){
-      area.innerHTML=loading((i+1)+' / '+journals.length+' 검색 중... ('+journals[i]+')', Math.round((i+1)/journals.length*100));
-      try{
-        /* 핵심 수정: 저널명만으로 검색 → 결과에서 해당 저널 필터 안 함 (SS가 venue 정확히 매칭 안 함) */
-        var q = wKws.length ? journals[i]+' '+wKws.slice(0,2).join(' ') : journals[i]+' semiconductor';
-        var ps = await apiSS(q, maxPer + 8);
-        ps = ps.filter(function(p){return !isJunk(p,0);});
-        /* 저널당 maxPer 편 제한 */
-        all = all.concat(ps.slice(0, maxPer));
-      }catch(e){console.warn(journals[i],e.message);}
-    }
-    all=dedup(all);
-    if(wKws.length){
-      var kwLow=wKws.map(function(k){return k.toLowerCase();});
-      all=all.filter(function(p){
-        var txt=(p.title+' '+p.abstract).toLowerCase();
-        return kwLow.some(function(k){return k.split(' ').some(function(w){return w.length>2&&txt.includes(w);});});
-      });
-    }
-    /* 최신순 정렬 */
-    all.sort(function(a,b){return (b.year||0)-(a.year||0);});
-    var ctx='Weekly Digest - '+journals.length+'개 저널'+(wKws.length?' / 키워드: '+wKws.join(', '):'');
-    area.innerHTML=statRow([[journals.length,'검색 저널'],[all.length,'수집 논문'],[wKws.length||'전체','주제 필터'],['무료','AI 분석']])
-      +claudeBox(all,ctx)
-      +'<div class="section-head">논문 목록 <span class="count-pill">'+all.length+'편</span></div>'
-      +(all.length ? all.map(function(p){return renderPaper(p,false);}).join('')
-        :'<div class="empty">조건에 맞는 논문이 없습니다.<br>키워드를 줄이거나 기간을 늘려보세요.</div>');
-  }catch(e){area.innerHTML='<div class="empty">오류: '+e.message+'</div>';}
+  var errs=[];
+  var all=[];
+  for(var i=0;i<journals.length;i++){
+    area.innerHTML=loading((i+1)+'/'+journals.length+' 검색 중 ('+journals[i]+')',Math.round((i+1)/journals.length*100));
+    try{
+      var q=wKws.length?journals[i]+' '+wKws.slice(0,2).join(' '):journals[i]+' semiconductor';
+      var ps=await apiSS(q,maxPer+8);
+      ps=ps.filter(function(p){return !isJunk(p);});
+      all=all.concat(ps.slice(0,maxPer));
+    }catch(e){errs.push(journals[i]+': '+e.message);console.error(journals[i],e);}
+  }
+  all=dedup(all);
+  if(wKws.length){
+    var kwL=wKws.map(function(k){return k.toLowerCase();});
+    all=all.filter(function(p){
+      var txt=(p.title+' '+p.abstract).toLowerCase();
+      return kwL.some(function(k){return k.split(' ').some(function(w){return w.length>2&&txt.includes(w);});});
+    });
+  }
+  all.sort(function(a,b){return (b.year||0)-(a.year||0);});
+  var errHtml=errs.length?'<div class="err-box">&#x26A0; 일부 오류: '+errs.slice(0,3).map(esc).join(' / ')+'</div>':'';
+  var ctx='Weekly Digest - '+journals.length+'개 저널'+(wKws.length?' / '+wKws.join(', '):'');
+  area.innerHTML=errHtml
+    +statRow([[journals.length,'검색 저널'],[all.length,'수집 논문'],[wKws.length||'전체','주제 필터'],['무료','AI 분석']])
+    +claudeBox(all,ctx)
+    +'<div class="section-head">논문 목록 <span class="count-pill">'+all.length+'편</span></div>'
+    +(all.length?all.map(function(p){return renderPaper(p,false);}).join('')
+      :'<div class="empty">조건에 맞는 논문이 없습니다.<br>키워드를 줄이거나 기간을 늘려보세요.</div>');
   btn.disabled=false;
 }
 
 /* ============================================================
-   JUST PUBLISHED — 탭 진입 시 자동 실행
+   JUST PUBLISHED
    ============================================================ */
 async function runJustPublished(){
   var area=document.getElementById('res-just');
-  area.innerHTML=loading('0 / '+JOURNALS.length+' 저널 스캔 중...', 0);
-  try{
-    var all=[];
-    var thisYear=new Date().getFullYear();
-    for(var i=0;i<JOURNALS.length;i++){
-      area.innerHTML=loading((i+1)+' / '+JOURNALS.length+' 스캔 중... ('+JOURNALS[i].name+')', Math.round((i+1)/JOURNALS.length*100));
-      try{
-        var ps=await apiSS(JOURNALS[i].name+' semiconductor', 20);
-        ps=ps.filter(function(p){
-          return !isJunk(p,0) && (p.year||0)>=thisYear-1;
-        });
-        all=all.concat(ps.slice(0,10));
-      }catch(e){console.warn(JOURNALS[i].name,e.message);}
-    }
-    all=dedup(all);
-    all.sort(function(a,b){return (b.year||0)-(a.year||0);});
-    var ctx='Just Published - IF 상위 20개 저널 최신 논문';
-    area.innerHTML=statRow([[20,'스캔 저널'],[all.length,'신규 논문'],['7일','기간'],['무료','AI 분석']])
-      +claudeBox(all,ctx)
-      +'<div class="section-head"><span class="just-badge">&#x1F534; Just Published</span> <span class="count-pill">'+all.length+'편</span></div>'
-      +(all.length ? all.map(function(p){return renderPaper(p,false);}).join('')
-        :'<div class="empty">최근 논문이 없습니다.<br>저널 DB 업데이트 지연일 수 있습니다.</div>');
-  }catch(e){area.innerHTML='<div class="empty">오류: '+e.message+'</div>';}
+  var errs=[];
+  var all=[];
+  var thisYear=new Date().getFullYear();
+  for(var i=0;i<JOURNALS.length;i++){
+    area.innerHTML=loading((i+1)+'/'+JOURNALS.length+' 스캔 중 ('+JOURNALS[i].name+')',Math.round((i+1)/JOURNALS.length*100));
+    try{
+      var ps=await apiSS(JOURNALS[i].name+' semiconductor',15);
+      ps=ps.filter(function(p){return !isJunk(p)&&(p.year||0)>=thisYear-1;});
+      all=all.concat(ps.slice(0,10));
+    }catch(e){errs.push(JOURNALS[i].name+': '+e.message);}
+  }
+  all=dedup(all);
+  all.sort(function(a,b){return (b.year||0)-(a.year||0);});
+  var errHtml=errs.length?'<div class="err-box">&#x26A0; 일부 오류 ('+errs.length+'개 저널): '+errs.slice(0,2).map(esc).join(' / ')+'</div>':'';
+  var ctx='Just Published - IF 상위 20개 저널 최신 논문';
+  area.innerHTML=errHtml
+    +statRow([[20,'스캔 저널'],[all.length,'신규 논문'],['7일','기간'],['무료','AI 분석']])
+    +claudeBox(all,ctx)
+    +'<div class="section-head"><span class="just-badge">&#x1F534; Just Published</span> <span class="count-pill">'+all.length+'편</span></div>'
+    +(all.length?all.map(function(p){return renderPaper(p,false);}).join('')
+      :'<div class="empty">최신 논문이 없습니다.<br>저널 DB 업데이트 지연일 수 있습니다.</div>');
 }
 
 /* ============================================================
    분야 모니터
-   핵심 수정: limit을 넉넉하게, junk 조건 완화
    ============================================================ */
 async function runWatch(){
   var kws=[...document.querySelectorAll('#kw-wrap .tag-item')].map(function(t){return t.dataset.kw;}).filter(Boolean);
   if(!kws.length){alert('키워드를 1개 이상 추가해주세요');return;}
   var limit=parseInt(document.getElementById('wd-lim').value);
-  var btn=document.getElementById('wd-btn'); btn.disabled=true;
+  var btn=document.getElementById('wd-btn');btn.disabled=true;
   var area=document.getElementById('res-watch');
-  area.innerHTML=loading(kws.length+'개 키워드 검색 중...');
-  try{
-    var all=[];
-    for(var i=0;i<kws.length;i++){
-      try{
-        /* limit을 넉넉하게 요청 후 클라이언트에서 자름 */
-        var ps=await apiSS(kws[i], limit*3);
-        /* junk 제거만 하고 초록 길이 조건 없음 */
-        ps=ps.filter(function(p){return !isJunk(p,0);});
-        all=all.concat(ps.slice(0,limit));
-      }catch(e){console.warn(kws[i],e.message);}
+  var errs=[];
+  var all=[];
+  for(var i=0;i<kws.length;i++){
+    area.innerHTML=loading((i+1)+'/'+kws.length+' 검색 중 ('+kws[i]+')',Math.round((i+1)/kws.length*100));
+    try{
+      /* limit을 3배 요청 후 클라이언트에서 slice */
+      var ps=await apiSS(kws[i],limit*3);
+      ps=ps.filter(function(p){return !isJunk(p);});
+      all=all.concat(ps.slice(0,limit));
+    }catch(e){
+      errs.push(kws[i]+': '+e.message);
+      console.error('[Watch]',kws[i],e);
     }
-    all=dedup(all);
-    all.sort(function(a,b){return (b.year||0)-(a.year||0);});
-    var ctx='분야 모니터 - '+kws.join(', ');
-    area.innerHTML=statRow([[kws.length,'키워드'],[all.length,'탐지 논문'],['실시간','업데이트'],['무료','AI 분석']])
-      +claudeBox(all,ctx)
-      +'<div class="section-head">탐지 논문 <span class="count-pill">'+all.length+'편</span></div>'
-      +(all.length ? all.map(function(p){return renderPaper(p,false);}).join('')
-        :'<div class="empty">검색 결과가 없습니다.<br>키워드를 영어로 입력하세요.<br>예: "GaN HEMT", "atomic layer deposition"</div>');
-  }catch(e){area.innerHTML='<div class="empty">오류: '+e.message+'</div>';}
+  }
+  all=dedup(all);
+  all.sort(function(a,b){return (b.year||0)-(a.year||0);});
+  var errHtml=errs.length
+    ?'<div class="err-box">&#x26A0; 오류 발생 ('+errs.length+'개): '+errs.map(esc).join(' / ')
+      +'<br><br><strong>해결 방법:</strong> 아래 "API 연결 테스트" 버튼을 눌러 진단해보세요.</div>':'';
+  var ctx='분야 모니터 - '+kws.join(', ');
+  area.innerHTML=errHtml
+    +statRow([[kws.length,'키워드'],[all.length,'탐지 논문'],['실시간','업데이트'],['무료','AI 분석']])
+    +claudeBox(all,ctx)
+    +'<div class="section-head">탐지 논문 <span class="count-pill">'+all.length+'편</span></div>'
+    +(all.length?all.map(function(p){return renderPaper(p,false);}).join('')
+      :'<div class="empty">검색 결과가 없습니다.<br>'
+      +(errs.length?'오류가 발생했습니다. 상단 "API 연결 테스트" 버튼으로 진단해보세요.'
+        :'키워드를 영어로 입력했는지 확인해주세요.<br>예: "GaN HEMT", "atomic layer deposition"')
+      +'</div>');
   btn.disabled=false;
 }
 
@@ -692,33 +718,38 @@ async function runHot(){
   var queries=fields.concat(hotKws);
   if(!queries.length){alert('분야 또는 키워드를 1개 이상 선택해주세요');return;}
   var pool=parseInt(document.getElementById('hot-pool').value);
-  var btn=document.getElementById('hot-btn'); btn.disabled=true;
+  var btn=document.getElementById('hot-btn');btn.disabled=true;
   var area=document.getElementById('res-hot');
-  area.innerHTML=loading(queries.length+'개 항목 검색 중...');
-  try{
-    var all=[];
-    for(var i=0;i<queries.length;i++){
-      try{
-        var ps=await apiSS(queries[i], pool+5);
-        ps=ps.filter(function(p){return !isJunk(p,0);});
-        all=all.concat(ps.slice(0,pool));
-      }catch(e){console.warn(queries[i],e.message);}
+  var errs=[];
+  var all=[];
+  for(var i=0;i<queries.length;i++){
+    area.innerHTML=loading((i+1)+'/'+queries.length+' 검색 중...',Math.round((i+1)/queries.length*100));
+    try{
+      var ps=await apiSS(queries[i],pool+5);
+      ps=ps.filter(function(p){return !isJunk(p);});
+      all=all.concat(ps.slice(0,pool));
+    }catch(e){
+      errs.push(queries[i].split(' ')[0]+': '+e.message);
+      console.error('[Hot]',queries[i],e);
     }
-    all=dedup(all);
-    all.sort(function(a,b){return (b.citations||0)-(a.citations||0);});
-    var ctx='혁신 논문 감지 - '+queries.slice(0,3).map(function(q){return q.split(' ')[0];}).join(', ')+' ('+all.length+'편)';
-    area.innerHTML=claudeBox(all,ctx)
-      +'<div class="section-head">분석 대상 <span class="count-pill">'+all.length+'편</span></div>'
-      +(all.length ? all.map(function(p){return renderPaper(p,true);}).join('')
-        :'<div class="empty">검색 결과가 없습니다.<br>다른 분야를 선택하거나 키워드를 추가해보세요.</div>');
-  }catch(e){area.innerHTML='<div class="empty">오류: '+e.message+'</div>';}
+  }
+  all=dedup(all);
+  /* 인용수 내림차순 */
+  all.sort(function(a,b){return (b.citations||0)-(a.citations||0);});
+  var errHtml=errs.length
+    ?'<div class="err-box">&#x26A0; 오류 ('+errs.length+'개): '+errs.slice(0,3).map(esc).join(' / ')
+      +'<br>"API 연결 테스트" 버튼으로 진단해보세요.</div>':'';
+  var ctx='혁신 논문 감지 - '+queries.slice(0,3).map(function(q){return q.split(' ')[0];}).join(', ')+'외';
+  area.innerHTML=errHtml
+    +claudeBox(all,ctx)
+    +'<div class="section-head">분석 대상 <span class="count-pill">'+all.length+'편</span></div>'
+    +(all.length?all.map(function(p){return renderPaper(p,true);}).join('')
+      :'<div class="empty">검색 결과가 없습니다.<br>'
+      +(errs.length?'오류가 발생했습니다. 상단 "API 연결 테스트" 버튼으로 진단해보세요.'
+        :'다른 분야를 선택하거나 키워드를 추가해보세요.')
+      +'</div>');
   btn.disabled=false;
 }
-
-/* ============================================================
-   초기화
-   ============================================================ */
-renderJournalTable();
 </script>
 </body>
 </html>
