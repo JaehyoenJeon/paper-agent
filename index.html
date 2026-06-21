@@ -206,34 +206,36 @@ select option{background:var(--bg2)}
     <div class="info-box"><strong>분야 모니터</strong> — 저널 무관, 키워드 기반으로 전체 논문 DB를 모니터링합니다.</div>
     <div class="lbl">관심 키워드</div>
     <div class="tag-wrap" id="kw-wrap">
-      <div class="tag-item" data-kw="semiconductor fabrication"><span>semiconductor fabrication</span><button onclick="this.parentElement.remove()">x</button></div>
-      <div class="tag-item" data-kw="transistor device physics"><span>device physics</span><button onclick="this.parentElement.remove()">x</button></div>
-      <div class="tag-item" data-kw="thin film deposition"><span>thin film deposition</span><button onclick="this.parentElement.remove()">x</button></div>
+      <div class="tag-item" data-kw="FinFET source drain epitaxy"><span>FinFET source/drain</span><button onclick="this.parentElement.remove()">x</button></div>
+      <div class="tag-item" data-kw="selective epitaxial growth SiGe Si:C"><span>Selective epitaxy (SiGe/Si:C)</span><button onclick="this.parentElement.remove()">x</button></div>
+      <div class="tag-item" data-kw="contact resistance CMOS semiconductor"><span>Contact resistance</span><button onclick="this.parentElement.remove()">x</button></div>
+      <div class="tag-item" data-kw="CMOS process integration semiconductor"><span>CMOS process integration</span><button onclick="this.parentElement.remove()">x</button></div>
+      <div class="tag-item" data-kw="plasma etching RIE semiconductor"><span>Plasma etching</span><button onclick="this.parentElement.remove()">x</button></div>
       <input type="text" id="kw-input" placeholder="키워드 입력 후 Enter" onkeydown="addTag(event)">
     </div>
     <div style="font-size:11px;color:var(--muted);margin-top:4px;margin-bottom:10px">Enter로 추가 · x로 삭제</div>
-    <div class="lbl">추천 키워드</div>
+    <div class="lbl">추천 키워드 <span style="font-size:10px;color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0">— FinFET S/D · 공정 전문가 기반</span></div>
     <div class="chip-row" style="margin-bottom:1.2rem">
-      <span class="chip" onclick="addKw('FinFET')">FinFET</span>
-      <span class="chip" onclick="addKw('gate-all-around nanosheet')">GAA</span>
-      <span class="chip" onclick="addKw('EUV lithography')">EUV lithography</span>
-      <span class="chip" onclick="addKw('GaN HEMT')">GaN HEMT</span>
-      <span class="chip" onclick="addKw('SiC MOSFET')">SiC MOSFET</span>
-      <span class="chip" onclick="addKw('atomic layer deposition')">ALD</span>
-      <span class="chip" onclick="addKw('CVD thin film')">CVD</span>
-      <span class="chip" onclick="addKw('high-k dielectric')">High-k</span>
-      <span class="chip" onclick="addKw('interface trap MOS')">Interface trap</span>
-      <span class="chip" onclick="addKw('DRAM capacitor')">DRAM</span>
-      <span class="chip" onclick="addKw('NAND flash memory')">NAND Flash</span>
-      <span class="chip" onclick="addKw('STT-MRAM')">STT-MRAM</span>
-      <span class="chip" onclick="addKw('MoS2 graphene 2D')">2D Materials</span>
-      <span class="chip" onclick="addKw('perovskite solar')">Perovskite</span>
-      <span class="chip" onclick="addKw('memristor resistive switching')">Memristor</span>
-      <span class="chip" onclick="addKw('quantum dot')">Quantum dot</span>
-      <span class="chip" onclick="addKw('plasma etching')">Plasma etching</span>
-      <span class="chip" onclick="addKw('ion implantation')">Ion implant</span>
-      <span class="chip" onclick="addKw('metal interconnect')">Interconnect</span>
-      <span class="chip" onclick="addKw('contact resistance')">Contact/Silicide</span>
+      <span class="chip" onclick="addKw('FinFET source drain epitaxy')">FinFET S/D epitaxy</span>
+      <span class="chip" onclick="addKw('raised source drain MOSFET')">Raised S/D</span>
+      <span class="chip" onclick="addKw('SiGe epitaxy pMOS stressor')">SiGe (pMOS)</span>
+      <span class="chip" onclick="addKw('Si:C epitaxy nMOS stressor')">Si:C (nMOS)</span>
+      <span class="chip" onclick="addKw('selective epitaxial growth semiconductor')">Selective Epitaxy</span>
+      <span class="chip" onclick="addKw('contact resistance metal semiconductor')">Contact Resistance</span>
+      <span class="chip" onclick="addKw('silicide NiSi CoSi2 CMOS')">Silicide</span>
+      <span class="chip" onclick="addKw('gate-all-around nanosheet transistor')">GAA / Nanosheet</span>
+      <span class="chip" onclick="addKw('EUV extreme ultraviolet lithography')">EUV Lithography</span>
+      <span class="chip" onclick="addKw('plasma etching RIE silicon')">Plasma Etching</span>
+      <span class="chip" onclick="addKw('atomic layer deposition ALD')">ALD</span>
+      <span class="chip" onclick="addKw('CVD epitaxy thin film')">CVD</span>
+      <span class="chip" onclick="addKw('ion implantation dopant semiconductor')">Ion Implantation</span>
+      <span class="chip" onclick="addKw('CMP chemical mechanical planarization')">CMP</span>
+      <span class="chip" onclick="addKw('high-k gate dielectric MOSFET')">High-k Gate</span>
+      <span class="chip" onclick="addKw('metal gate work function CMOS')">Metal Gate</span>
+      <span class="chip" onclick="addKw('stress strain mobility enhancement')">Stress Engineering</span>
+      <span class="chip" onclick="addKw('junction abruptness dopant diffusion')">Junction / Doping</span>
+      <span class="chip" onclick="addKw('interconnect contact plug tungsten')">Interconnect</span>
+      <span class="chip" onclick="addKw('process architecture CMOS scaling')">Process Architecture</span>
     </div>
     <div class="g2">
       <div><div class="lbl">기간</div>
@@ -261,26 +263,26 @@ select option{background:var(--bg2)}
     <div class="info-box"><strong>혁신 논문 감지</strong> — 분야 + 직접 입력 키워드로 주목받는 논문을 수집합니다.</div>
     <div class="lbl">분야 선택</div>
     <div class="chip-row" id="hot-chips">
-      <span class="chip on" data-hf="semiconductor CMOS fabrication process">CMOS Fabrication</span>
-      <span class="chip on" data-hf="MOSFET transistor device physics">Device Physics</span>
-      <span class="chip" data-hf="FinFET nanosheet gate-all-around">FinFET / GAA</span>
-      <span class="chip" data-hf="EUV lithography patterning">EUV Lithography</span>
-      <span class="chip" data-hf="ALD CVD thin film deposition">ALD / CVD</span>
-      <span class="chip" data-hf="GaN HEMT power electronics">GaN Power</span>
-      <span class="chip" data-hf="SiC silicon carbide MOSFET">SiC Power</span>
-      <span class="chip" data-hf="DRAM capacitor memory">DRAM</span>
-      <span class="chip" data-hf="NAND flash 3D memory">NAND Flash</span>
-      <span class="chip" data-hf="MRAM spintronic memory">STT-MRAM</span>
-      <span class="chip" data-hf="MoS2 graphene 2D semiconductor">2D Materials</span>
-      <span class="chip" data-hf="perovskite photovoltaic solar">Perovskite Solar</span>
-      <span class="chip" data-hf="memristor neuromorphic computing">Memristor</span>
-      <span class="chip" data-hf="quantum computing qubit">Quantum Computing</span>
-      <span class="chip" data-hf="high-k dielectric gate oxide">High-k Dielectric</span>
-      <span class="chip" data-hf="plasma etching semiconductor">Plasma Etching</span>
-      <span class="chip" data-hf="copper interconnect low-k">Interconnect</span>
-      <span class="chip" data-hf="organic semiconductor OLED">Organic Semi.</span>
-      <span class="chip" data-hf="ion implantation dopant annealing">Ion Implantation</span>
-      <span class="chip" data-hf="contact resistance silicide ohmic">Contact/Silicide</span>
+      <span class="chip on"  data-hf="FinFET source drain epitaxy stressor">FinFET S/D</span>
+      <span class="chip on"  data-hf="CMOS process integration semiconductor fabrication">CMOS Fabrication</span>
+      <span class="chip on"  data-hf="gate-all-around nanosheet transistor process">GAA / Nanosheet</span>
+      <span class="chip on"  data-hf="selective epitaxial growth SiGe Si:C fin">Selective Epitaxy</span>
+      <span class="chip on"  data-hf="contact resistance silicide semiconductor ohmic">Contact / Silicide</span>
+      <span class="chip on"  data-hf="plasma etching RIE fin semiconductor">Plasma Etching</span>
+      <span class="chip on"  data-hf="EUV extreme ultraviolet lithography patterning">EUV Lithography</span>
+      <span class="chip on"  data-hf="ALD CVD thin film deposition semiconductor">ALD / CVD</span>
+      <span class="chip"     data-hf="MOSFET device physics short channel effect">Device Physics</span>
+      <span class="chip"     data-hf="ion implantation dopant activation anneal">Ion Implantation</span>
+      <span class="chip"     data-hf="CMP chemical mechanical planarization">CMP</span>
+      <span class="chip"     data-hf="high-k gate dielectric interface trap">High-k Dielectric</span>
+      <span class="chip"     data-hf="metal interconnect copper low-k resistance">Interconnect</span>
+      <span class="chip"     data-hf="DRAM capacitor memory scaling">DRAM</span>
+      <span class="chip"     data-hf="GaN HEMT power device">GaN Power</span>
+      <span class="chip"     data-hf="SiC silicon carbide MOSFET">SiC Power</span>
+      <span class="chip"     data-hf="2D materials MoS2 transistor">2D Materials</span>
+      <span class="chip"     data-hf="memristor neuromorphic computing">Memristor</span>
+      <span class="chip"     data-hf="surface roughness machining tribology">Surface Engineering</span>
+      <span class="chip"     data-hf="quantum computing qubit semiconductor">Quantum Computing</span>
     </div>
     <div class="lbl" style="margin-top:4px">추가 키워드</div>
     <div class="tag-wrap" id="hot-kw-wrap">
@@ -365,7 +367,20 @@ function rebuildAbs(inv){
 
 async function oaFetch(params){
   params.mailto='research@paperagent.app';
-  var resp=await fetch(OA+'?'+new URLSearchParams(params),{headers:{Accept:'application/json'}});
+  /* URLSearchParams는 ':' → '%3A', ',' → '%2C' 로 인코딩해서 OpenAlex 필터 파싱 오류 발생
+     수동으로 URL 조립: filter/sort는 ':',',' 를 리터럴로 유지, 값 내 공백만 '+' 처리 */
+  var parts=Object.keys(params).map(function(k){
+    var v=String(params[k]);
+    if(k==='filter'||k==='sort'){
+      return k+'='+v.replace(/ /g,'+');          /* 공백만 '+' 처리, ':',',' 는 그대로 */
+    }
+    if(k==='search'){
+      return 'search='+encodeURIComponent(v);    /* 검색어는 완전 인코딩 */
+    }
+    return encodeURIComponent(k)+'='+encodeURIComponent(v);
+  });
+  var url=OA+'?'+parts.join('&');
+  var resp=await fetch(url,{headers:{Accept:'application/json'}});
   if(!resp.ok){var t=await resp.text();throw new Error('OpenAlex '+resp.status+': '+t.slice(0,100));}
   return(await resp.json()).results||[];
 }
